@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Beeper2G">
 <meta property="og:description" content="很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人方问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定。   
 后来朋友告诉我，github的空间搭博客不错，有300MB的空间，弄个静态的博客上去，完全胜任。我就动手试了试，果然">
-<meta property="og:updated_time" content="2016-07-06T07:31:12.229Z">
+<meta property="og:updated_time" content="2016-07-06T08:43:14.747Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用github空间建立个人博客">
 <meta name="twitter:description" content="很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人方问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定。   
@@ -59,9 +59,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://beeper2g.com"></form>
@@ -109,17 +109,20 @@ fatal: could not read Username for &apos;https://github.com&apos;: Invalid argum
 </code></pre><p>查了很多资料都不行，最后改了一下_config.yml，把https改成了git</p>
 <pre><code>deploy:
   type: git
-  repository: git@github.com:lhfiii/lhfiii.github.io.git
+  repository: git@github.com:beeper2g/beeper2g.github.io.git
   branch: master  
 </code></pre><p>然后生成key，用ssh方式提交，就成功了…</p>
 </li>
 </ul>
-<h3 id="关于图片"><a href="#关于图片" class="headerlink" title="关于图片"></a>关于图片</h3><p>图片最好不要往空间里丢，一是空间本身不大，二是图片资料访问太慢。这里建议大家用七牛的服务，用了一下，感觉不错。也可以用cloudinary的服务。这个就看个人喜好了，cloudinary功能也挺强大。</p>
+<h3 id="atom-xml和sitemap-xml"><a href="#atom-xml和sitemap-xml" class="headerlink" title="atom.xml和sitemap.xml"></a>atom.xml和sitemap.xml</h3><p>这两个文件的作用自行百度，生成的方法为</p>
+<pre><code>npm install hexo-generator-feed --save
+npm install hexo-generator-sitemap --save
+</code></pre><h3 id="关于图片"><a href="#关于图片" class="headerlink" title="关于图片"></a>关于图片</h3><p>图片最好不要往空间里丢，一是空间本身不大，二是图片资料访问太慢。这里建议大家用七牛的服务，用了一下，感觉不错。也可以用cloudinary的服务。这个就看个人喜好了，cloudinary功能也挺强大。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqamdtoa0001xwwqyddikc0v" class="article-share-link">Partager</a>
+      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqan0gak0000w0wqosqg6yts" class="article-share-link">Share</a>
       
       
     </footer>
@@ -128,15 +131,11 @@ fatal: could not read Username for &apos;https://github.com&apos;: Invalid argum
     
 <nav id="article-nav">
   
-    <a href="/2016/07/06/写在前面/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
-      <div class="article-nav-title">
-        
-          写在前面
-        
-      </div>
-    </a>
   
+    <a href="/2016/07/06/写在前面/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">写在前面</div>
+    </a>
   
 </nav>
 
@@ -157,7 +156,7 @@ fatal: could not read Username for &apos;https://github.com&apos;: Invalid argum
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">归档</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li></ul>
     </div>
@@ -167,16 +166,16 @@ fatal: could not read Username for &apos;https://github.com&apos;: Invalid argum
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">最近</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2016/07/06/写在前面/">写在前面</a>
+            <a href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
           </li>
         
           <li>
-            <a href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
+            <a href="/2016/07/06/写在前面/">写在前面</a>
           </li>
         
       </ul>
@@ -192,7 +191,7 @@ fatal: could not read Username for &apos;https://github.com&apos;: Invalid argum
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 Beeper2G<br>
-      Propulsé by <a href="http://beeper2g.com/" target="_blank">Beeper2g</a>
+      Powered by <a href="http://beeper2g.com/" target="_blank">Beeper2g</a>
     </div>
   </div>
 </footer>
