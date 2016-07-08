@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://beeper2g.com/"/>
-  <updated>2016-07-06T09:09:42.899Z</updated>
+  <updated>2016-07-08T02:59:51.467Z</updated>
   <id>http://beeper2g.com/</id>
   
   <author>
@@ -16,16 +16,43 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>CentOS上安装Git服务器</title>
+    <link href="http://beeper2g.com/2016/07/07/CentOS%E4%B8%8A%E5%AE%89%E8%A3%85Git%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/</id>
+    <published>2016-07-07T12:27:25.000Z</published>
+    <updated>2016-07-08T02:59:51.467Z</updated>
+    
+    <content type="html">&lt;p&gt;#1.安装Git&lt;br&gt;打开控制台，执行以下命令进行安装&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ yum install git&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;安装过程中会停下来让你确认，不用管它，直接按Y然后回车即可。&lt;br&gt;安装完成以后，可以通过命令 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;figcaption&gt;&lt;span&gt;--version```查看git的版本号&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;接下来需要使用命令创建git用户组合相应的管理用户&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;首先我们先添加一个用户组gitgroup，执行以下命令&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;$ groupadd gitgroup&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;然后根据需要创建管理用户，我这里添加一个名为git的用户，并将其加入到gitgroup组中，执行以下命令&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;$ adduser git -g gitgroup&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;可以根据自己的需要，多次创建用户。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;设置git用户的登录密码，根据以下命令修改git用户的密码&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;$ passwd git&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;#2.创建证书登录&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;收集所有需要登录的用户公钥，公钥位于id_rsa.pub文件夹中，把我们的公钥导入到/home/git/.ssh/authorized_key文件夹里，一行一个。如果没有则创建它&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;$ cd /home/git/&lt;br&gt;$ mkdir .ssh&lt;br&gt;$ chmod 700 .ssh&lt;br&gt;$ touch .ssh/authorized_keys&lt;br&gt;$ chmod 600 .ssh/authorized_keys&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;#3.初始化Git仓库&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;安装完了Git工具，并给Git分配了需要的账户以后，我们可以进行Git仓库的创建了。我这里把Git仓库放在```/home```目录下，参考以下的命令&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;$ cd /home&lt;br&gt;$ mkdir gitrepo&lt;br&gt;$ chown git:gitgroup gitrepo/&lt;br&gt;$ cd gitrepo&lt;/p&gt;
+&lt;p&gt;$ git init –bare hellogit.git&lt;br&gt;初始化空的 Git 版本库于 /home/gitrepo/hellogit.git/&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这样，我们就在/home/gitrepo/下创建了一个名为hellogit的空仓库。这里需要将仓库的所属用户修改为git，这样git用户对这个项目就有了push权限。&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;$ chown -R git:gitgroup hellogit.git&lt;br&gt;```&lt;br&gt;这种方法安装的Git服务器有很大的局限性：仓库的拥有者才有push权限，其他的用户就没有了。单用户模式没问题，如果需要和其他人协作使用的时候就会有问题。&lt;br&gt;后续，我将介绍其他方式安装过程。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#1.安装Git&lt;br&gt;打开控制台，执行以下命令进行安装&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;l
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>使用github空间建立个人博客</title>
     <link href="http://beeper2g.com/2016/07/06/%E4%BD%BF%E7%94%A8github%E7%A9%BA%E9%97%B4%E5%BB%BA%E7%AB%8B%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     <id>http://beeper2g.com/2016/07/06/使用github空间建立个人博客/</id>
     <published>2016-07-06T07:27:25.000Z</published>
-    <updated>2016-07-06T09:09:42.899Z</updated>
+    <updated>2016-07-07T00:30:12.868Z</updated>
     
-    <content type="html">&lt;p&gt;很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人方问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定。   &lt;/p&gt;
+    <content type="html">&lt;p&gt;很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人访问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定。   &lt;/p&gt;
 &lt;p&gt;后来朋友告诉我，github的空间搭博客不错，有300MB的空间，弄个静态的博客上去，完全胜任。我就动手试了试，果然可行，速度也过的去，反正也没人看，权当自己写日记了。  &lt;/p&gt;
 &lt;h3 id=&quot;这里写一下搭建的过程，以及遇到过的坑。&quot;&gt;&lt;a href=&quot;#这里写一下搭建的过程，以及遇到过的坑。&quot; class=&quot;headerlink&quot; title=&quot;这里写一下搭建的过程，以及遇到过的坑。&quot;&gt;&lt;/a&gt;这里写一下搭建的过程，以及遇到过的坑。&lt;/h3&gt;&lt;p&gt;域名么，早就有了，就是这个&lt;a href=&quot;http://beeper2g.com&quot;&gt;Beeper2G.com&lt;/a&gt;, 那么接下来在github上申请帐号吧。这里就遇到了一个问题，用的163邮箱，结果收不到github的认证邮件。查了查，把github.com放在白名单中，再重新生成认证邮件，然后就收到了…  &lt;/p&gt;
-&lt;p&gt;接下来的事就很简单了，新建一个名子和帐户一样的工程，我这是里就是beeper2g.github.io。setting中可以自动生成博客模版，下一步下一步，然后就成功了。输入&lt;a href=&quot;http://beeper2g.github.io试一下，能成功打开网站了。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://beeper2g.github.io试一下，能成功打开网站了。&lt;/a&gt;  &lt;/p&gt;
+&lt;p&gt;接下来的事就很简单了，新建一个名子和帐户一样的工程，我这是里就是beeper2g.github.io。setting中可以自动生成博客模版，下一步下一步，然后就成功了。输入&lt;a href=&quot;http://beeper2g.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://beeper2g.github.io&lt;/a&gt; 试一下，能成功打开网站了。  &lt;/p&gt;
 &lt;p&gt;工程根目录下有一个CNAME，里面放的就是域名，这个文件不能丢，丢了就解析不过来了。可以手动编辑这个文件，也可以在要setting中设置，设置成功后这个文件自动就修改成功了。修改完毕后，把你的域名解过来，带wwww的和不带的，都解析过来。再输入你的个人域名试试，应该可以打开了，打不开的话刷下dns看看解析有没问题。  &lt;/p&gt;
 &lt;h3 id=&quot;使用hexo写博客。&quot;&gt;&lt;a href=&quot;#使用hexo写博客。&quot; class=&quot;headerlink&quot; title=&quot;使用hexo写博客。&quot;&gt;&lt;/a&gt;使用hexo写博客。&lt;/h3&gt;&lt;p&gt;自动生成的博客，是可以使用的，只是编辑发布有点麻烦，大家可以用官方的工具来做这些事情。我这里介绍一下hexo写博客。  &lt;/p&gt;
 &lt;p&gt;我知道hexo是自己从网上自己搜的，开始以为这东西是基于express的网站容器，因为按hexo官方的介绍，生成网站后，hexo server就可以在本地看效果。然后我就在centos上搭了一个hexo环境。当我查怎么样使用forever让这个玩意跑起来的时候，发现这个东西只是不是生成静态网站的工具罢了。  &lt;/p&gt;
@@ -45,10 +72,12 @@
     
     <summary type="html">
     
-      &lt;p&gt;很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人方问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定
+      &lt;p&gt;很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人访问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定
     
     </summary>
     
+    
+      <category term="服务器搭建" scheme="http://beeper2g.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"/>
     
   </entry>
   

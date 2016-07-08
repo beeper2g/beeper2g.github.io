@@ -54,7 +54,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://beeper2g.com"></form>
@@ -64,6 +64,51 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-CentOS上安装Git服务器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/07/CentOS上安装Git服务器/" class="article-date">
+  <time datetime="2016-07-07T12:27:25.000Z" itemprop="datePublished">2016-07-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/07/CentOS上安装Git服务器/">CentOS上安装Git服务器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#1.安装Git<br>打开控制台，执行以下命令进行安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel</div><div class="line">$ yum install git</div></pre></td></tr></table></figure></p>
+<p>安装过程中会停下来让你确认，不用管它，直接按Y然后回车即可。<br>安装完成以后，可以通过命令 <figure class="highlight plain"><figcaption><span>--version```查看git的版本号</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">接下来需要使用命令创建git用户组合相应的管理用户</div><div class="line">首先我们先添加一个用户组gitgroup，执行以下命令</div></pre></td></tr></table></figure></p>
+<p>$ groupadd gitgroup<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">然后根据需要创建管理用户，我这里添加一个名为git的用户，并将其加入到gitgroup组中，执行以下命令</div></pre></td></tr></table></figure></p>
+<p>$ adduser git -g gitgroup<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">可以根据自己的需要，多次创建用户。</div><div class="line">设置git用户的登录密码，根据以下命令修改git用户的密码</div></pre></td></tr></table></figure></p>
+<p>$ passwd git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#2.创建证书登录</div><div class="line">收集所有需要登录的用户公钥，公钥位于id_rsa.pub文件夹中，把我们的公钥导入到/home/git/.ssh/authorized_key文件夹里，一行一个。如果没有则创建它</div></pre></td></tr></table></figure></p>
+<p>$ cd /home/git/<br>$ mkdir .ssh<br>$ chmod 700 .ssh<br>$ touch .ssh/authorized_keys<br>$ chmod 600 .ssh/authorized_keys<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#3.初始化Git仓库</div><div class="line">安装完了Git工具，并给Git分配了需要的账户以后，我们可以进行Git仓库的创建了。我这里把Git仓库放在```/home```目录下，参考以下的命令</div></pre></td></tr></table></figure></p>
+<p>$ cd /home<br>$ mkdir gitrepo<br>$ chown git:gitgroup gitrepo/<br>$ cd gitrepo</p>
+<p>$ git init –bare hellogit.git<br>初始化空的 Git 版本库于 /home/gitrepo/hellogit.git/<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这样，我们就在/home/gitrepo/下创建了一个名为hellogit的空仓库。这里需要将仓库的所属用户修改为git，这样git用户对这个项目就有了push权限。</div></pre></td></tr></table></figure></p>
+<p>$ chown -R git:gitgroup hellogit.git<br>```<br>这种方法安装的Git服务器有很大的局限性：仓库的拥有者才有push权限，其他的用户就没有了。单用户模式没问题，如果需要和其他人协作使用的时候就会有问题。<br>后续，我将介绍其他方式安装过程。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqd5n7b100006swq2c1t5ely" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-使用github空间建立个人博客" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -87,10 +132,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人方问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定。   </p>
+        <p>很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人访问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定。   </p>
 <p>后来朋友告诉我，github的空间搭博客不错，有300MB的空间，弄个静态的博客上去，完全胜任。我就动手试了试，果然可行，速度也过的去，反正也没人看，权当自己写日记了。  </p>
 <h3 id="这里写一下搭建的过程，以及遇到过的坑。"><a href="#这里写一下搭建的过程，以及遇到过的坑。" class="headerlink" title="这里写一下搭建的过程，以及遇到过的坑。"></a>这里写一下搭建的过程，以及遇到过的坑。</h3><p>域名么，早就有了，就是这个<a href="http://beeper2g.com">Beeper2G.com</a>, 那么接下来在github上申请帐号吧。这里就遇到了一个问题，用的163邮箱，结果收不到github的认证邮件。查了查，把github.com放在白名单中，再重新生成认证邮件，然后就收到了…  </p>
-<p>接下来的事就很简单了，新建一个名子和帐户一样的工程，我这是里就是beeper2g.github.io。setting中可以自动生成博客模版，下一步下一步，然后就成功了。输入<a href="http://beeper2g.github.io试一下，能成功打开网站了。" target="_blank" rel="external">http://beeper2g.github.io试一下，能成功打开网站了。</a>  </p>
+<p>接下来的事就很简单了，新建一个名子和帐户一样的工程，我这是里就是beeper2g.github.io。setting中可以自动生成博客模版，下一步下一步，然后就成功了。输入<a href="http://beeper2g.github.io" target="_blank" rel="external">http://beeper2g.github.io</a> 试一下，能成功打开网站了。  </p>
 <p>工程根目录下有一个CNAME，里面放的就是域名，这个文件不能丢，丢了就解析不过来了。可以手动编辑这个文件，也可以在要setting中设置，设置成功后这个文件自动就修改成功了。修改完毕后，把你的域名解过来，带wwww的和不带的，都解析过来。再输入你的个人域名试试，应该可以打开了，打不开的话刷下dns看看解析有没问题。  </p>
 <h3 id="使用hexo写博客。"><a href="#使用hexo写博客。" class="headerlink" title="使用hexo写博客。"></a>使用hexo写博客。</h3><p>自动生成的博客，是可以使用的，只是编辑发布有点麻烦，大家可以用官方的工具来做这些事情。我这里介绍一下hexo写博客。  </p>
 <p>我知道hexo是自己从网上自己搜的，开始以为这东西是基于express的网站容器，因为按hexo官方的介绍，生成网站后，hexo server就可以在本地看效果。然后我就在centos上搭了一个hexo环境。当我查怎么样使用forever让这个玩意跑起来的时候，发现这个东西只是不是生成静态网站的工具罢了。  </p>
@@ -110,9 +155,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqanzo6i0000yowqlrt84yj1" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqd5n7b600016swq56dveimb" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
+
     </footer>
   </div>
   
@@ -161,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqanzo6p0001yowq1smfmgnl" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqd5n7b800026swq63as9ybw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -180,9 +227,14 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
+    </div>
+  </div>
 
-  
-    
+
   
     
   <div class="widget-wrap">
@@ -196,9 +248,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">最近</h3>
+    <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/07/07/CentOS上安装Git服务器/">CentOS上安装Git服务器</a>
+          </li>
         
           <li>
             <a href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
@@ -221,7 +277,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 Beeper2G<br>
-      Powered by <a href="http://beeper2g.com/" target="_blank">Beeper2g</a>
+      Powered by <a href="http://beeper2g.com/" target="_blank">Beeper2g</a> QQ群:
     </div>
   </div>
 </footer>
