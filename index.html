@@ -88,19 +88,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>#1.安装Git<br>打开控制台，执行以下命令进行安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel</div><div class="line">$ yum install git</div></pre></td></tr></table></figure></p>
-<p>安装过程中会停下来让你确认，不用管它，直接按Y然后回车即可。<br>安装完成以后，可以通过命令 <figure class="highlight plain"><figcaption><span>--version```查看git的版本号</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">接下来需要使用命令创建git用户组合相应的管理用户</div><div class="line">首先我们先添加一个用户组gitgroup，执行以下命令</div></pre></td></tr></table></figure></p>
-<p>$ groupadd gitgroup<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">然后根据需要创建管理用户，我这里添加一个名为git的用户，并将其加入到gitgroup组中，执行以下命令</div></pre></td></tr></table></figure></p>
-<p>$ adduser git -g gitgroup<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">可以根据自己的需要，多次创建用户。</div><div class="line">设置git用户的登录密码，根据以下命令修改git用户的密码</div></pre></td></tr></table></figure></p>
-<p>$ passwd git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#2.创建证书登录</div><div class="line">收集所有需要登录的用户公钥，公钥位于id_rsa.pub文件夹中，把我们的公钥导入到/home/git/.ssh/authorized_key文件夹里，一行一个。如果没有则创建它</div></pre></td></tr></table></figure></p>
-<p>$ cd /home/git/<br>$ mkdir .ssh<br>$ chmod 700 .ssh<br>$ touch .ssh/authorized_keys<br>$ chmod 600 .ssh/authorized_keys<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#3.初始化Git仓库</div><div class="line">安装完了Git工具，并给Git分配了需要的账户以后，我们可以进行Git仓库的创建了。我这里把Git仓库放在```/home```目录下，参考以下的命令</div></pre></td></tr></table></figure></p>
-<p>$ cd /home<br>$ mkdir gitrepo<br>$ chown git:gitgroup gitrepo/<br>$ cd gitrepo</p>
-<p>$ git init –bare hellogit.git<br>初始化空的 Git 版本库于 /home/gitrepo/hellogit.git/<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这样，我们就在/home/gitrepo/下创建了一个名为hellogit的空仓库。这里需要将仓库的所属用户修改为git，这样git用户对这个项目就有了push权限。</div></pre></td></tr></table></figure></p>
-<p>$ chown -R git:gitgroup hellogit.git<br>```<br>这种方法安装的Git服务器有很大的局限性：仓库的拥有者才有push权限，其他的用户就没有了。单用户模式没问题，如果需要和其他人协作使用的时候就会有问题。<br>后续，我将介绍其他方式安装过程。</p>
+<p>安装过程中会停下来让你确认，不用管它，直接按Y然后回车即可。<br>安装完成以后，可以通过命令 <code>git --version</code>查看git的版本号</p>
+<p>接下来需要使用命令创建git用户组合相应的管理用户<br>首先我们先添加一个用户组gitgroup，执行以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ groupadd gitgroup</div></pre></td></tr></table></figure></p>
+<p>然后根据需要创建管理用户，我这里添加一个名为git的用户，并将其加入到gitgroup组中，执行以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ adduser git -g gitgroup</div></pre></td></tr></table></figure></p>
+<p>可以根据自己的需要，多次创建用户。<br>设置git用户的登录密码，根据以下命令修改git用户的密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ passwd git</div></pre></td></tr></table></figure></p>
+<p>#2.创建证书登录<br>收集所有需要登录的用户公钥，公钥位于id_rsa.pub文件夹中，把我们的公钥导入到/home/git/.ssh/authorized_key文件夹里，一行一个。如果没有则创建它<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cd /home/git/</div><div class="line">$ mkdir .ssh</div><div class="line">$ chmod 700 .ssh</div><div class="line">$ touch .ssh/authorized_keys</div><div class="line">$ chmod 600 .ssh/authorized_keys</div></pre></td></tr></table></figure></p>
+<p>#3.初始化Git仓库<br>安装完了Git工具，并给Git分配了需要的账户以后，我们可以进行Git仓库的创建了。我这里把Git仓库放在<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line">$ cd /home</div><div class="line">$ mkdir gitrepo</div><div class="line">$ chown git:gitgroup gitrepo/</div><div class="line">$ cd gitrepo</div><div class="line"></div><div class="line">$ git init --bare hellogit.git</div><div class="line">初始化空的 Git 版本库于 /home/gitrepo/hellogit.git/</div></pre></td></tr></table></figure></p>
+<p>这样，我们就在/home/gitrepo/下创建了一个名为hellogit的空仓库。这里需要将仓库的所属用户修改为git，这样git用户对这个项目就有了push权限。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ chown -R git:gitgroup hellogit.git</div></pre></td></tr></table></figure></p>
+<p>这种方法安装的Git服务器有很大的局限性：仓库的拥有者才有push权限，其他的用户就没有了。单用户模式没问题，如果需要和其他人协作使用的时候就会有问题。<br>后续，我将介绍其他方式安装过程。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqd5n7b100006swq2c1t5ely" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqd5yfwa0000okwq7tzti8fz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -155,7 +155,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqd5n7b600016swq56dveimb" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqd5yfwf0001okwqf4q89b3n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -208,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqd5n7b800026swq63as9ybw" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqd5yfwh0002okwqfz0z2xyz" class="article-share-link">Share</a>
       
       
     </footer>
