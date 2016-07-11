@@ -90,7 +90,7 @@
         <p>上文说了渲染网页，并且把生成的网页保存到文件。这种方法可以保存屏幕快照，但是速度很慢，需要把所需要的js,css全都加载完才能生成文件。<br>在实际的数据抓取中，并不需要把网页渲梁出来，而是直接从html中取到所需要的数据。</p>
 <p>cheerio是nodejs的抓取页面模块，为服务器特别定制的，快速、灵活、实施的jQuery核心实现。适合各种Web爬虫程序。此处也不多废话，上代码</p>
 <p><strong><em>注意一点，蜘蛛几乎都会忽略js和jquery，所以如何想做SEO，尽量就别让客户端渲染了，还是服务端来渲梁吧。这里抓的也是静态页面上的东西</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">var phantom = require(&apos;phantom&apos;);</div><div class="line">var cheerio = require(&apos;cheerio&apos;);</div><div class="line"></div><div class="line">var sitepage = null;</div><div class="line">var phInstance = null;</div><div class="line">phantom.create()</div><div class="line">    .then(instance =&gt; &#123;</div><div class="line">        phInstance = instance;</div><div class="line">        page = phInstance.createPage();</div><div class="line">        page.viewportSize = &#123; width: 1024, height: 800 &#125;;</div><div class="line">        page.clipRect = &#123; top: 0, left: 0, width: 1024, height: 800 &#125;;</div><div class="line">        page.settings = &#123;</div><div class="line">          javascriptEnabled: false,</div><div class="line">          loadImages: true,</div><div class="line">          userAgent: &apos;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) PhantomJS/19.0&apos;</div><div class="line">        &#125;;</div><div class="line">        return page;</div><div class="line">    &#125;)</div><div class="line">    .then(page =&gt; &#123;</div><div class="line">        sitepage = page;</div><div class="line">        return page.open(&apos;http://beeper2g.com/&apos;);</div><div class="line">    &#125;)</div><div class="line">    .then(status =&gt; &#123;</div><div class="line">        console.log(status);</div><div class="line">        sitepage.render(&apos;./test.png&apos;);</div><div class="line">        return sitepage.property(&apos;content&apos;);</div><div class="line">    &#125;)</div><div class="line">    .then(content =&gt; &#123;</div><div class="line">        let $ = cheerio.load(content)</div><div class="line">        console.log($(&apos;a#logo&apos;)[0].text);</div><div class="line">        sitepage.close();</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;)</div><div class="line">    .catch(error =&gt; &#123;</div><div class="line">        console.log(error);</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> phantom = <span class="built_in">require</span>(<span class="string">'phantom'</span>);</div><div class="line"><span class="keyword">var</span> cheerio = <span class="built_in">require</span>(<span class="string">'cheerio'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> sitepage = <span class="literal">null</span>;</div><div class="line"><span class="keyword">var</span> phInstance = <span class="literal">null</span>;</div><div class="line">phantom.create()</div><div class="line">    .then(instance =&gt; &#123;</div><div class="line">        phInstance = instance;</div><div class="line">        page = phInstance.createPage();</div><div class="line">        page.viewportSize = &#123; width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.clipRect = &#123; top: <span class="number">0</span>, left: <span class="number">0</span>, width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.settings = &#123;</div><div class="line">          javascriptEnabled: <span class="literal">false</span>,</div><div class="line">          loadImages: <span class="literal">true</span>,</div><div class="line">          userAgent: <span class="string">'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) PhantomJS/19.0'</span></div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">return</span> page;</div><div class="line">    &#125;)</div><div class="line">    .then(page =&gt; &#123;</div><div class="line">        sitepage = page;</div><div class="line">        <span class="keyword">return</span> page.open(<span class="string">'http://beeper2g.com/'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(status =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(status);</div><div class="line">        sitepage.render(<span class="string">'./test.png'</span>);</div><div class="line">        <span class="keyword">return</span> sitepage.property(<span class="string">'content'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(content =&gt; &#123;</div><div class="line">        <span class="keyword">let</span> $ = cheerio.load(content)</div><div class="line">        <span class="built_in">console</span>.log($(<span class="string">'a#logo'</span>)[<span class="number">0</span>].text);</div><div class="line">        sitepage.close();</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;)</div><div class="line">    .catch(error =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(error);</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
 <p>程序抓取了本博客的title和所有img标签中的图片，然后把图片下载下来（抓别人图片时，不要恶意费人流量哦，有些是cdn付费的，别看到妹子图就一个劲的抓哦）。</p>
 <p>测试的话，首先</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ npm init</div><div class="line">$ npm install cheerio --save</div><div class="line">$ npm install fs --save</div><div class="line">$ npm install mkdirp --save</div><div class="line">$ npm install request --save</div></pre></td></tr></table></figure>
@@ -101,7 +101,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs抓取网页数据和网页截屏 - 副本/" data-id="ciqi0ujx40006kkwqxn61hsim" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs抓取网页数据和网页截屏 - 副本/" data-id="ciqi0vani0002s0wqxr0gi4jr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
@@ -149,7 +149,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs渲染网页并截屏/" data-id="ciqi0ujx10005kkwqiuiahmms" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs渲染网页并截屏/" data-id="ciqi0vanp0005s0wq5xrbvi5l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
@@ -209,7 +209,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqi0ujws0001kkwqx1kt6vpq" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqi0vanb0000s0wq2jugl3yy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -254,7 +254,58 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqi0ujwo0000kkwqvy8lpft2" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqi0vang0001s0wq4kin9k6v" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-写在前面" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/06/写在前面/" class="article-date">
+  <time datetime="2016-07-06T07:27:25.000Z" itemprop="datePublished">2016-07-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/06/写在前面/">写在前面</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>几年前，<a href="https://github.com/Quakertlist" target="_blank" rel="external">贵哥</a>就推荐我写博客，写博客的好处，我是很明白的，但是做为一个典型的理科生，就连读书时老师要求写的日记都是随便应付几句了事的人，要怎么坚持下来呢？<br>这次下定决心开始写博客，是考虑到了以下几个原因：  </p>
+<ul>
+<li>人老了，记性真的跟不上去了，超过35岁的程序员，应该都有感触吧  </li>
+<li>贵哥的强列要求  </li>
+<li>自己这些年到处阅读别人的成就，觉得应该把自己学到的东西总结整理一下，给刚进入程序员行列的人看一下。</li>
+<li><strong>贵哥会和我一起维护这个博客</strong></li>
+</ul>
+<p>所以，这次是真的认真打算写博客，本人想了一下，博客的内容就限制在自己有过经验的几个领域。</p>
+<ol>
+<li>金融中IT相关的技术和解决方案</li>
+<li>移动开发中遇到的问题和解决方案</li>
+<li>部署和运维当中遇到的问题和解决方案    </li>
+</ol>
+<p>博客应该不会花时间在语言或语法层面，这些东西网上教程很多，有问题应该学会自己解决。但是方案，策略等问题，一旦初期定错了方向，结局就是你懂的了。  </p>
+<p>千里之行始于足下，这里给自己加一下油，也希望大家加以鞭策和督促。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqi0vanj0003s0wqrgx1u1aj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -309,62 +360,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqi0ujwu0002kkwqyre8g54f" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqi0vant0006s0wqfykukbzk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-写在前面" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/06/写在前面/" class="article-date">
-  <time datetime="2016-07-06T07:27:25.000Z" itemprop="datePublished">2016-07-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/06/写在前面/">写在前面</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>几年前，<a href="https://github.com/Quakertlist" target="_blank" rel="external">贵哥</a>就推荐我写博客，写博客的好处，我是很明白的，但是做为一个典型的理科生，就连读书时老师要求写的日记都是随便应付几句了事的人，要怎么坚持下来呢？<br>这次下定决心开始写博客，是考虑到了以下几个原因：  </p>
-<ul>
-<li>人老了，记性真的跟不上去了，超过35岁的程序员，应该都有感触吧  </li>
-<li>贵哥的强列要求  </li>
-<li>自己这些年到处阅读别人的成就，觉得应该把自己学到的东西总结整理一下，给刚进入程序员行列的人看一下。</li>
-<li><strong>贵哥会和我一起维护这个博客</strong></li>
-</ul>
-<p>所以，这次是真的认真打算写博客，本人想了一下，博客的内容就限制在自己有过经验的几个领域。</p>
-<ol>
-<li>金融中IT相关的技术和解决方案</li>
-<li>移动开发中遇到的问题和解决方案</li>
-<li>部署和运维当中遇到的问题和解决方案    </li>
-</ol>
-<p>博客应该不会花时间在语言或语法层面，这些东西网上教程很多，有问题应该学会自己解决。但是方案，策略等问题，一旦初期定错了方向，结局就是你懂的了。  </p>
-<p>千里之行始于足下，这里给自己加一下油，也希望大家加以鞭策和督促。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqi0ujwv0003kkwql1om9gzk" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -423,7 +423,7 @@
           </li>
         
           <li>
-            <a href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
+            <a href="/2016/07/06/写在前面/">写在前面</a>
           </li>
         
       </ul>
