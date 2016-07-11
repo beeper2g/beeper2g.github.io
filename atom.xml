@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://beeper2g.com/"/>
-  <updated>2016-07-11T08:02:55.595Z</updated>
+  <updated>2016-07-11T12:44:39.547Z</updated>
   <id>http://beeper2g.com/</id>
   
   <author>
@@ -16,11 +16,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>使用phantomjs抓取网页数据和网页截屏</title>
-    <link href="http://beeper2g.com/2016/07/11/%E4%BD%BF%E7%94%A8phantomjs%E6%8A%93%E5%8F%96%E7%BD%91%E9%A1%B5%E6%95%B0%E6%8D%AE%E5%92%8C%E7%BD%91%E9%A1%B5%E6%88%AA%E5%B1%8F/"/>
-    <id>http://beeper2g.com/2016/07/11/使用phantomjs抓取网页数据和网页截屏/</id>
+    <title>使用cheerio解析网页</title>
+    <link href="http://beeper2g.com/2016/07/11/%E4%BD%BF%E7%94%A8phantomjs%E6%8A%93%E5%8F%96%E7%BD%91%E9%A1%B5%E6%95%B0%E6%8D%AE%E5%92%8C%E7%BD%91%E9%A1%B5%E6%88%AA%E5%B1%8F%20-%20%E5%89%AF%E6%9C%AC/"/>
+    <id>http://beeper2g.com/2016/07/11/使用phantomjs抓取网页数据和网页截屏 - 副本/</id>
+    <published>2016-07-11T12:44:25.000Z</published>
+    <updated>2016-07-11T12:44:39.547Z</updated>
+    
+    <content type="html">&lt;p&gt;上文说了渲染网页，并且把生成的网页保存到文件。这种方法可以保存屏幕快照，但是速度很慢，需要把所需要的js,css全都加载完才能生成文件。&lt;br&gt;在实际的数据抓取中，并不需要把网页渲梁出来，而是直接从html中取到所需要的数据。&lt;/p&gt;
+&lt;p&gt;cheerio是nodejs的抓取页面模块，为服务器特别定制的，快速、灵活、实施的jQuery核心实现。适合各种Web爬虫程序。此处也不多废话，上代码&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;注意一点，蜘蛛几乎都会忽略js和jquery，所以如何想做SEO，尽量就别让客户端渲染了，还是服务端来渲梁吧。这里抓的也是静态页面上的东西&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;35&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;36&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;37&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;var phantom = require(&amp;apos;phantom&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var cheerio = require(&amp;apos;cheerio&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var sitepage = null;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var phInstance = null;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;phantom.create()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .then(instance =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        phInstance = instance;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        page = phInstance.createPage();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        page.viewportSize = &amp;#123; width: 1024, height: 800 &amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        page.clipRect = &amp;#123; top: 0, left: 0, width: 1024, height: 800 &amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        page.settings = &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;          javascriptEnabled: false,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;          loadImages: true,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;          userAgent: &amp;apos;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) PhantomJS/19.0&amp;apos;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        return page;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .then(page =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        sitepage = page;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        return page.open(&amp;apos;http://beeper2g.com/&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .then(status =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        console.log(status);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        sitepage.render(&amp;apos;./test.png&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        return sitepage.property(&amp;apos;content&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .then(content =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        let $ = cheerio.load(content)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        console.log($(&amp;apos;a#logo&amp;apos;)[0].text);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        sitepage.close();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        phInstance.exit();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .catch(error =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        console.log(error);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        phInstance.exit();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;程序抓取了本博客的title和所有img标签中的图片，然后把图片下载下来（抓别人图片时，不要恶意费人流量哦，有些是cdn付费的，别看到妹子图就一个劲的抓哦）。&lt;/p&gt;
+&lt;p&gt;测试的话，首先&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ npm init&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ npm install cheerio --save&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ npm install fs --save&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ npm install mkdirp --save&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ npm install request --save&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;再把上面代码保存在index.js中，运行&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ node index.js&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;即可&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上文说了渲染网页，并且把生成的网页保存到文件。这种方法可以保存屏幕快照，但是速度很慢，需要把所需要的js,css全都加载完才能生成文件。&lt;br&gt;在实际的数据抓取中，并不需要把网页渲梁出来，而是直接从html中取到所需要的数据。&lt;/p&gt;
+&lt;p&gt;cheerio是nodejs的抓
+    
+    </summary>
+    
+    
+      <category term="Nodejs" scheme="http://beeper2g.com/tags/Nodejs/"/>
+    
+      <category term="数据抓取" scheme="http://beeper2g.com/tags/%E6%95%B0%E6%8D%AE%E6%8A%93%E5%8F%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用phantomjs渲染网页并截屏</title>
+    <link href="http://beeper2g.com/2016/07/11/%E4%BD%BF%E7%94%A8phantomjs%E6%B8%B2%E6%9F%93%E7%BD%91%E9%A1%B5%E5%B9%B6%E6%88%AA%E5%B1%8F/"/>
+    <id>http://beeper2g.com/2016/07/11/使用phantomjs渲染网页并截屏/</id>
     <published>2016-07-11T12:27:25.000Z</published>
-    <updated>2016-07-11T08:02:55.595Z</updated>
+    <updated>2016-07-11T12:32:34.351Z</updated>
     
     <content type="html">&lt;p&gt;数据抓取和处理，是做服务的基本要求，这里先对一个轻量级的，基于Nodejs的库做一个示例。&lt;br&gt;Phantom JS是一个服务器端的 JavaScript API 的 WebKit。其支持各种Web标准： DOM 处理, CSS 选择器, JSON, Canvas, 和 SVG, BalaBala…可以去&lt;a href=&quot;http://phantomjs.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;官网&lt;/a&gt;阅读一下具体的API和Source，这里省略&lt;/p&gt;
 &lt;p&gt;这里说一下如何在Nodejs中对网页进行截屏和处理数据&lt;/p&gt;
