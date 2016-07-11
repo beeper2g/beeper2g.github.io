@@ -65,6 +65,112 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-使用phantomjs抓取网页数据和网页截屏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/11/使用phantomjs抓取网页数据和网页截屏/" class="article-date">
+  <time datetime="2016-07-11T12:27:25.000Z" itemprop="datePublished">2016-07-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/11/使用phantomjs抓取网页数据和网页截屏/">使用phantomjs抓取网页数据和网页截屏</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>数据抓取和处理，是做服务的基本要求，这里先对一个轻量级的，基于Nodejs的库做一个示例。<br>Phantom JS是一个服务器端的 JavaScript API 的 WebKit。其支持各种Web标准： DOM 处理, CSS 选择器, JSON, Canvas, 和 SVG, BalaBala…可以去<a href="http://phantomjs.org/" target="_blank" rel="external">官网</a>阅读一下具体的API和Source，这里省略</p>
+<p>这里说一下如何在Nodejs中对网页进行截屏和处理数据</p>
+<p>主要使用了<a href="https://github.com/amir20/phantomjs-node" target="_blank" rel="external">phantomjs-node</a> </p>
+<p>代码不多说，直接上</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> phantom = <span class="built_in">require</span>(<span class="string">'phantom'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> sitepage = <span class="literal">null</span>;</div><div class="line"><span class="keyword">var</span> phInstance = <span class="literal">null</span>;</div><div class="line">phantom.create()</div><div class="line">    .then(instance =&gt; &#123;</div><div class="line">        phInstance = instance;</div><div class="line">        page = phInstance.createPage();</div><div class="line">        page.viewportSize = &#123; width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.clipRect = &#123; top: <span class="number">0</span>, left: <span class="number">0</span>, width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.settings = &#123;</div><div class="line">          javascriptEnabled: <span class="literal">false</span>,</div><div class="line">          loadImages: <span class="literal">true</span>,</div><div class="line">          userAgent: <span class="string">'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) PhantomJS/19.0'</span></div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">return</span> page;</div><div class="line">    &#125;)</div><div class="line">    .then(page =&gt; &#123;</div><div class="line">        sitepage = page;</div><div class="line">        <span class="keyword">return</span> page.open(<span class="string">'https://www.baidu.com/'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(status =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(status);</div><div class="line">        sitepage.render(<span class="string">'./test.png'</span>);</div><div class="line">        <span class="keyword">return</span> sitepage.property(<span class="string">'content'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(content =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(content);</div><div class="line">        sitepage.close();</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;)</div><div class="line">    .catch(error =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(error);</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>测试的话，首先</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm init</div><div class="line">$ npm install phantom --save</div></pre></td></tr></table></figure>
+<p>再把上面代码保存在index.js中，运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node index.js</div></pre></td></tr></table></figure>
+<p>即可</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs抓取网页数据和网页截屏/" data-id="ciqhqs3420003ekwqf0qx2stv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CentOS上安装GitBlit服务" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/09/CentOS上安装GitBlit服务/" class="article-date">
+  <time datetime="2016-07-09T07:27:25.000Z" itemprop="datePublished">2016-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/09/CentOS上安装GitBlit服务/">CentOS上安装GitBlit服务</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#简单介绍<br>在上一篇文章中，已经简单的介绍了如何在CentOS的服务器上搭建git服务器。但是这种方式实现的服务器功能比较弱，操作起来也比较繁琐。在网上搜索了一圈，感觉Gitblit比较符合我的需求。接下来我就简单地介绍下，如何在CentOS上搭建GitBlit服务吧。<br>GitBlit是一款纯Java库实现用来管理、查看和处理Git资料库，相当于Git的Java管理工具。该管理软件支持Windows和Linux平台。可以有效的对项目、用户权限进行控制和管理。比较适合小型团队进行管理控制。<br><img src="http://images2015.cnblogs.com/blog/137454/201607/137454-20160709144917077-1795970024.png" alt="效果图1"><br><img src="http://images2015.cnblogs.com/blog/137454/201607/137454-20160709144918171-665203311.png" alt="效果图2"><br>看上面的效果图，是不是很高大上啊，接下来就简单得介绍下在CentOS上安装GitBlit步骤吧。<br>官方网站:<a href="http://gitblit.com/" target="_blank" rel="external">http://gitblit.com/</a></p>
+<p>#安装Java环境<br>在CentOS上查看自带JDK是否安装比较简单，输入命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum list installed | grep java</div></pre></td></tr></table></figure></p>
+<p>如果没有安装JDK可以先查看下yum库中的Java安装包，然后执行命令进行下载安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum -y list java*                               # 查看yum库中java安装包</div><div class="line">yum -y install java-1.8.0-openjdk*   # 安装java-1.8.0相关java库</div></pre></td></tr></table></figure></p>
+<p>当结果显示为Complete！即安装完毕。</p>
+<p>#下载GitBlit<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir -p /opt/gitblit                # gitblit的默认输出目录是这里，所以就创建这个目录</div><div class="line">cd /opt/gitblit</div><div class="line">wget http://dl.bintray.com/gitblit/releases/gitblit-1.8.0.tar.gz</div></pre></td></tr></table></figure></p>
+<p>如果下载过程中出现提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-bash: wget: command not foundls</div></pre></td></tr></table></figure></p>
+<p>说明没有安装wget程序，用yum库装一个即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install wget</div></pre></td></tr></table></figure></p>
+<p>#解压缩Gitblit<br>使用命令tar将下载到的gitblit压缩包解压缩到目标目录，我是解压缩到/opt/gitblit目录下<br><img src="http://images2015.cnblogs.com/blog/137454/201607/137454-20160709144919046-211183810.png" alt="效果图3"></p>
+<p>#修改需要的配置文件</p>
+<p>##修改data/defaults.properties<br>根据自己的需要修改配置信息，我只修改了以下几个地方<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git.repositoriesFolder = 要保存的资料库路径</div><div class="line">server.httpPort = 要开放的HTTP端口号</div><div class="line">server.httpBindInterface = 服务器IP或者域名</div><div class="line">server.httpsBindInterface = localhost</div></pre></td></tr></table></figure></p>
+<p>修改完以后保存，退出。</p>
+<p>##修改service-centos.sh<br>根据自己的服务器的设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GITBLIT_PATH = 你解压缩存放的路径，例如/opt/gitblit</div><div class="line">GITBLIT_BASE_FOLDER = 存放数据的基地址，例如 /opt/gitblit/data</div><div class="line">GITBLIT_HTTP_PORT = 开启服务的HTTP端口</div></pre></td></tr></table></figure></p>
+<p>修改完以后保存，退出。</p>
+<p>#启动gitblit</p>
+<p>##直接启动gitblit服务<br>通过java执行gitblit服务，要注意执行的命令参数，可以参考以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -jar gitblit.jar --baseFolder data    # 当前在/opt/gitblit目录下</div></pre></td></tr></table></figure></p>
+<p>如果命令执行无误，则可以打开浏览器输入设置的站点信息即可打开GitBlit的管理界面</p>
+<p>##通过service启动gitblit服务<br>新版本Gitblit已经帮我们封装了服务安装脚本，我们只需要执行安装脚本(install-service-centos.sh)和服务启动脚本(service-centos.sh)即可。如果在执行shell脚本时出现权限问题，只需要给文件增加读写权限即可。如果配置正确的话，则可以打开浏览器输入设置的站点信息即可打开GitBlit的管理界面</p>
+<p>#要注意的地方</p>
+<ul>
+<li>我这里仅用HTTP方式访问，HTTPS方式还没有研究透</li>
+<li>环境搭建好以后，默认的管理员账户是admin，密码是admin，一定要及时进行修改</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqhqs33v0000ekwqj59l6709" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-CentOS上安装Git服务器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/07/CentOS上安装Git服务器/" class="article-date">
@@ -100,7 +206,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqd60ybu0000f0wqad86qfvj" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqhqs33z0001ekwqo62a3xdq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -155,7 +261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqd60yby0001f0wq1jl97zcy" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqhqs3410002ekwq7dtwe81r" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -208,7 +314,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqd60yc00002f0wq7nvgbi1m" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqhqs34k000aekwqf2otsbpw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -230,7 +336,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据抓取/">数据抓取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
     </div>
   </div>
 
@@ -251,6 +357,14 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/07/11/使用phantomjs抓取网页数据和网页截屏/">使用phantomjs抓取网页数据和网页截屏</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/09/CentOS上安装GitBlit服务/">CentOS上安装GitBlit服务</a>
+          </li>
         
           <li>
             <a href="/2016/07/07/CentOS上安装Git服务器/">CentOS上安装Git服务器</a>
