@@ -65,6 +65,45 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-使用mongoose存储抓取到的数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/12/使用mongoose存储抓取到的数据/" class="article-date">
+  <time datetime="2016-07-12T04:27:25.000Z" itemprop="datePublished">2016-07-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>数据抓取完，总要落地的，这里用mongdb存储抓到的数据。采用mongdb只是为了方便，不讨论不区别和其它数据库的关系。<br>还是老习惯，直接贴代码</p>
+<p>Topic.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema;</div><div class="line"></div><div class="line"><span class="comment">// Define schema </span></div><div class="line"><span class="keyword">var</span> _Topic = <span class="keyword">new</span> Schema(&#123; </div><div class="line">    title : <span class="built_in">String</span>, </div><div class="line">    content : <span class="built_in">String</span>, </div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// export then</span></div><div class="line">exports.Topic = mongoose.model(<span class="string">'Topic'</span>, _Topic);</div></pre></td></tr></table></figure>
+<p>index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> request = <span class="built_in">require</span>(<span class="string">"request"</span>);</div><div class="line"><span class="keyword">var</span> cheerio = <span class="built_in">require</span>(<span class="string">"cheerio"</span>);</div><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</div><div class="line"><span class="keyword">var</span> models = <span class="built_in">require</span>(<span class="string">'./Topic'</span>);</div><div class="line"><span class="keyword">var</span> Topic = models.Topic;</div><div class="line">mongoose.connect(<span class="string">'mongodb://localhost/mongoose-demo'</span>);</div><div class="line"></div><div class="line"><span class="comment">//目标网址</span></div><div class="line"><span class="keyword">var</span> domain = <span class="string">'http://beeper2g.com'</span>;</div><div class="line"><span class="keyword">var</span> firstPage =  domain + <span class="string">'/2016/07/06/%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fetchPage</span>(<span class="params">url</span>) </span>&#123;     <span class="comment">//封装了一层函数</span></div><div class="line">    startRequest(url); </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">startRequest</span>(<span class="params">url</span>) </span>&#123;</div><div class="line">    request.get(url, <span class="function"><span class="keyword">function</span>(<span class="params">error, response, body</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(url);</div><div class="line">        <span class="keyword">if</span>(!error &amp;&amp; response.statusCode == <span class="number">200</span>) &#123;</div><div class="line">            <span class="keyword">let</span> $ = cheerio.load(body);</div><div class="line">    </div><div class="line">            <span class="keyword">let</span> topic = <span class="keyword">new</span> Topic(&#123; </div><div class="line">                title : $(<span class="string">'h1.article-title'</span>).text(), </div><div class="line">                content : $(<span class="string">'div.article-entry'</span>).text(), </div><div class="line">            &#125;); </div><div class="line">    </div><div class="line">            topic.save(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">                <span class="keyword">if</span> (!err) <span class="built_in">console</span>.log(<span class="string">'Success!'</span>);</div><div class="line">                <span class="keyword">else</span> <span class="built_in">console</span>.log(err.message); <span class="comment">//#err:not-x</span></div><div class="line">            &#125;);</div><div class="line">    </div><div class="line">            <span class="keyword">let</span> preUrl = $(<span class="string">'a#article-nav-newer'</span>).attr(<span class="string">'href'</span>);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (preUrl) &#123;</div><div class="line">                fetchPage(domain + <span class="built_in">encodeURI</span>(preUrl));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">fetchPage(firstPage);</div><div class="line"></div><div class="line"><span class="comment">// mongoose.connection.close(function () &#123;</span></div><div class="line"><span class="comment">//     console.log('Mongoose disconnected through app termination');</span></div><div class="line"><span class="comment">//     process.exit(0);</span></div><div class="line"><span class="comment">// &#125;);</span></div></pre></td></tr></table></figure>
+<p>程序从我发的第一个博客开始往前取数据，数据取到就存到数据库中，代码的刷盘方式和异常处理都可以再优化。这里只是做一个演示，不喧宾夺主</p>
+<p>测试的话，首先</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ npm init</div><div class="line">$ npm install cheerio --save</div><div class="line">$ npm install mongoose --save</div><div class="line">$ npm install request --save</div></pre></td></tr></table></figure>
+<p>再把上面代码保存工程中，运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node index.js</div></pre></td></tr></table></figure>
+<p>即可</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://beeper2g.com/2016/07/12/使用mongoose存储抓取到的数据/" data-id="ciqiygavi0003vgwqu1u2z4ww" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-使用cheerio解析网页" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/11/使用cheerio解析网页/" class="article-date">
@@ -101,7 +140,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/11/使用cheerio解析网页/" data-id="ciqiwd0jc0003u0wqtyulzfks" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/11/使用cheerio解析网页/" data-id="ciqiygavj0004vgwqmbqqlw86" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
@@ -149,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs渲染网页并截屏/" data-id="ciqiwd0jd0004u0wqvuja43x4" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs渲染网页并截屏/" data-id="ciqiygavo0008vgwqu767gph1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
@@ -209,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqiwd0jg0006u0wqactiz3kx" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqiygav90000vgwq2rsgqmih" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -256,7 +295,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqiwd0j40000u0wq91uobg2e" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqiygavd0001vgwq6mwt85ja" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -313,7 +352,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqiwd0j80001u0wq29hrvmya" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqiygavm0006vgwqpt08pvme" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -366,7 +405,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqiwd0jx000iu0wqzx5qmgtl" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqiygavq000bvgwqtry6vzsn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -411,6 +450,10 @@
       <ul>
         
           <li>
+            <a href="/2016/07/12/使用mongoose存储抓取到的数据/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2016/07/11/使用cheerio解析网页/">使用cheerio解析网页</a>
           </li>
         
@@ -424,10 +467,6 @@
         
           <li>
             <a href="/2016/07/07/CentOS上安装Git服务器/">CentOS上安装Git服务器</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
           </li>
         
       </ul>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Beeper2G</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="数据抓取完，总要落地的，这里用mongdb存储抓到的数据。采用mongdb只是为了方便，不讨论不区别和其它数据库的关系。还是老习惯，直接贴代码
+Topic.js
+1234567891011var mongoose = require(&apos;mongoose&apos;);var Schema = mongoose.Schema;// Define schema var _Topic = new Schema(&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Beeper2G">
+<meta property="og:url" content="http://beeper2g.com/2016/07/12/使用mongoose存储抓取到的数据/index.html">
+<meta property="og:site_name" content="Beeper2G">
+<meta property="og:description" content="数据抓取完，总要落地的，这里用mongdb存储抓到的数据。采用mongdb只是为了方便，不讨论不区别和其它数据库的关系。还是老习惯，直接贴代码
+Topic.js
+1234567891011var mongoose = require(&apos;mongoose&apos;);var Schema = mongoose.Schema;// Define schema var _Topic = new Schema(&amp;">
+<meta property="og:updated_time" content="2016-07-12T04:25:27.501Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Beeper2G">
+<meta name="twitter:description" content="数据抓取完，总要落地的，这里用mongdb存储抓到的数据。采用mongdb只是为了方便，不讨论不区别和其它数据库的关系。还是老习惯，直接贴代码
+Topic.js
+1234567891011var mongoose = require(&apos;mongoose&apos;);var Schema = mongoose.Schema;// Define schema var _Topic = new Schema(&amp;">
+  
+    <link rel="alternate" href="/atom.xml" title="Beeper2G" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Beeper2G</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">专注金融中的IT技术</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://beeper2g.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-使用mongoose存储抓取到的数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/12/使用mongoose存储抓取到的数据/" class="article-date">
+  <time datetime="2016-07-12T04:27:25.000Z" itemprop="datePublished">2016-07-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>数据抓取完，总要落地的，这里用mongdb存储抓到的数据。采用mongdb只是为了方便，不讨论不区别和其它数据库的关系。<br>还是老习惯，直接贴代码</p>
+<p>Topic.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema;</div><div class="line"></div><div class="line"><span class="comment">// Define schema </span></div><div class="line"><span class="keyword">var</span> _Topic = <span class="keyword">new</span> Schema(&#123; </div><div class="line">    title : <span class="built_in">String</span>, </div><div class="line">    content : <span class="built_in">String</span>, </div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// export then</span></div><div class="line">exports.Topic = mongoose.model(<span class="string">'Topic'</span>, _Topic);</div></pre></td></tr></table></figure>
+<p>index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> request = <span class="built_in">require</span>(<span class="string">"request"</span>);</div><div class="line"><span class="keyword">var</span> cheerio = <span class="built_in">require</span>(<span class="string">"cheerio"</span>);</div><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</div><div class="line"><span class="keyword">var</span> models = <span class="built_in">require</span>(<span class="string">'./Topic'</span>);</div><div class="line"><span class="keyword">var</span> Topic = models.Topic;</div><div class="line">mongoose.connect(<span class="string">'mongodb://localhost/mongoose-demo'</span>);</div><div class="line"></div><div class="line"><span class="comment">//目标网址</span></div><div class="line"><span class="keyword">var</span> domain = <span class="string">'http://beeper2g.com'</span>;</div><div class="line"><span class="keyword">var</span> firstPage =  domain + <span class="string">'/2016/07/06/%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fetchPage</span>(<span class="params">url</span>) </span>&#123;     <span class="comment">//封装了一层函数</span></div><div class="line">    startRequest(url); </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">startRequest</span>(<span class="params">url</span>) </span>&#123;</div><div class="line">    request.get(url, <span class="function"><span class="keyword">function</span>(<span class="params">error, response, body</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(url);</div><div class="line">        <span class="keyword">if</span>(!error &amp;&amp; response.statusCode == <span class="number">200</span>) &#123;</div><div class="line">            <span class="keyword">let</span> $ = cheerio.load(body);</div><div class="line">    </div><div class="line">            <span class="keyword">let</span> topic = <span class="keyword">new</span> Topic(&#123; </div><div class="line">                title : $(<span class="string">'h1.article-title'</span>).text(), </div><div class="line">                content : $(<span class="string">'div.article-entry'</span>).text(), </div><div class="line">            &#125;); </div><div class="line">    </div><div class="line">            topic.save(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">                <span class="keyword">if</span> (!err) <span class="built_in">console</span>.log(<span class="string">'Success!'</span>);</div><div class="line">                <span class="keyword">else</span> <span class="built_in">console</span>.log(err.message); <span class="comment">//#err:not-x</span></div><div class="line">            &#125;);</div><div class="line">    </div><div class="line">            <span class="keyword">let</span> preUrl = $(<span class="string">'a#article-nav-newer'</span>).attr(<span class="string">'href'</span>);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (preUrl) &#123;</div><div class="line">                fetchPage(domain + <span class="built_in">encodeURI</span>(preUrl));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">fetchPage(firstPage);</div><div class="line"></div><div class="line"><span class="comment">// mongoose.connection.close(function () &#123;</span></div><div class="line"><span class="comment">//     console.log('Mongoose disconnected through app termination');</span></div><div class="line"><span class="comment">//     process.exit(0);</span></div><div class="line"><span class="comment">// &#125;);</span></div></pre></td></tr></table></figure>
+<p>程序从我发的第一个博客开始往前取数据，数据取到就存到数据库中，代码的刷盘方式和异常处理都可以再优化。这里只是做一个演示，不喧宾夺主</p>
+<p>测试的话，首先</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ npm init</div><div class="line">$ npm install cheerio --save</div><div class="line">$ npm install mongoose --save</div><div class="line">$ npm install request --save</div></pre></td></tr></table></figure>
+<p>再把上面代码保存工程中，运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node index.js</div></pre></td></tr></table></figure>
+<p>即可</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://beeper2g.com/2016/07/12/使用mongoose存储抓取到的数据/" data-id="ciqiygavi0003vgwqu1u2z4ww" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/11/使用cheerio解析网页/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用cheerio解析网页</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据抓取/">数据抓取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/07/12/使用mongoose存储抓取到的数据/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/11/使用cheerio解析网页/">使用cheerio解析网页</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/11/使用phantomjs渲染网页并截屏/">使用phantomjs渲染网页并截屏</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/09/CentOS上安装GitBlit服务/">CentOS上安装GitBlit服务</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/07/CentOS上安装Git服务器/">CentOS上安装Git服务器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Beeper2G<br>
+      Powered by <a href="http://beeper2g.com/" target="_blank">Beeper2g</a> QQ群:
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
