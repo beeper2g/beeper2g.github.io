@@ -65,6 +65,49 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-NutsTom" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/12/NutsTom/" class="article-date">
+  <time datetime="2016-07-12T13:27:25.000Z" itemprop="datePublished">2016-07-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/12/NutsTom/">NutsTom</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NutsTom这个游戏的灵感源于会<code>说话的汤姆猫</code>中的小游戏，是两年前贵哥的无聊之作<br>所有的代码和游戏素材都在里面了，因为空间的原因，删除了Cocos2dx相关的代码，以及消息推送，统计和分享的代码。如果想编译运行，直接下载好对应版本的Cocos2dx库，再删除里面关于消息推送，统计和分享的代码即可。</p>
+<p>代码在这里: <a href="https://github.com/beeper2g/NutsTom" target="_blank" rel="external">https://github.com/beeper2g/NutsTom</a></p>
+<p>游戏已上架</p>
+<p><a href="https://itunes.apple.com/us/app/nuts-tom/id915824505" target="_blank" rel="external">苹果市场</a></p>
+<p><a href="https://play.google.com/store/apps/details?id=com.beeper2g.nutstom" target="_blank" rel="external">谷哥市场</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://beeper2g.com/2016/07/12/NutsTom/" data-id="ciqjgdwse0004yswqdwqjf76w" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/手机游戏/">手机游戏</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-抓取网页数据和图片和截取网页快照" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/12/抓取网页数据和图片和截取网页快照/" class="article-date">
@@ -91,10 +134,12 @@
 <p>这里说一下如何在Nodejs中对网页进行截屏和处理数据</p>
 <p>主要使用了<a href="https://github.com/amir20/phantomjs-node" target="_blank" rel="external">phantomjs-node</a> </p>
 <p>代码不多说，直接上</p>
+<p>index.js</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> phantom = <span class="built_in">require</span>(<span class="string">'phantom'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> sitepage = <span class="literal">null</span>;</div><div class="line"><span class="keyword">var</span> phInstance = <span class="literal">null</span>;</div><div class="line">phantom.create()</div><div class="line">    .then(instance =&gt; &#123;</div><div class="line">        phInstance = instance;</div><div class="line">        page = phInstance.createPage();</div><div class="line">        page.viewportSize = &#123; width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.clipRect = &#123; top: <span class="number">0</span>, left: <span class="number">0</span>, width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.settings = &#123;</div><div class="line">          javascriptEnabled: <span class="literal">false</span>,</div><div class="line">          loadImages: <span class="literal">true</span>,</div><div class="line">          userAgent: <span class="string">'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) PhantomJS/19.0'</span></div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">return</span> page;</div><div class="line">    &#125;)</div><div class="line">    .then(page =&gt; &#123;</div><div class="line">        sitepage = page;</div><div class="line">        <span class="keyword">return</span> page.open(<span class="string">'https://www.baidu.com/'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(status =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(status);</div><div class="line">        sitepage.render(<span class="string">'./test.png'</span>);</div><div class="line">        <span class="keyword">return</span> sitepage.property(<span class="string">'content'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(content =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(content);</div><div class="line">        sitepage.close();</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;)</div><div class="line">    .catch(error =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(error);</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
 <h2 id="使用cheerio解析网页"><a href="#使用cheerio解析网页" class="headerlink" title="使用cheerio解析网页"></a>使用cheerio解析网页</h2><p>上面说了渲染网页，并且把生成的网页保存到文件。这种方法可以保存屏幕快照，但是速度很慢，需要把所需要的js,css全都加载完才能生成文件。<br>在实际的数据抓取中，并不需要把网页渲梁出来，而是直接从html中取到所需要的数据。</p>
 <p>cheerio是nodejs的抓取页面模块，为服务器特别定制的，快速、灵活、实施的jQuery核心实现。适合各种Web爬虫程序。此处也不多废话，上代码</p>
 <p><strong><em>注意一点，蜘蛛几乎都会忽略js和jquery，所以如何想做SEO，尽量就别让客户端渲染了，还是服务端来渲梁吧。这里抓的也是静态页面上的东西</em></strong></p>
+<p>index.js</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> request = <span class="built_in">require</span>(<span class="string">"request"</span>);</div><div class="line"><span class="keyword">var</span> cheerio = <span class="built_in">require</span>(<span class="string">"cheerio"</span>);</div><div class="line"><span class="keyword">var</span> mkdirp = <span class="built_in">require</span>(<span class="string">'mkdirp'</span>);</div><div class="line"></div><div class="line"><span class="comment">//目标网址</span></div><div class="line"><span class="keyword">var</span> url = <span class="string">'http://beeper2g.com/'</span>;</div><div class="line"></div><div class="line"><span class="comment">//本地存储目录</span></div><div class="line"><span class="keyword">var</span> dir = <span class="string">'./images'</span>;</div><div class="line"></div><div class="line"><span class="comment">//创建目录</span></div><div class="line">mkdirp(dir, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(err)&#123;</div><div class="line">        <span class="built_in">console</span>.log(err);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//发送请求</span></div><div class="line">request(url, <span class="function"><span class="keyword">function</span>(<span class="params">error, response, body</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(!error &amp;&amp; response.statusCode == <span class="number">200</span>) &#123;</div><div class="line">        <span class="keyword">var</span> $ = cheerio.load(body);</div><div class="line">        <span class="built_in">console</span>.log($(<span class="string">'a#logo'</span>).first().text());</div><div class="line">        $(<span class="string">'img'</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> src = $(<span class="keyword">this</span>).attr(<span class="string">'src'</span>);</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'正在下载'</span> + src);</div><div class="line">            download(src, dir, <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">100000</span>) + src.substr(<span class="number">-4</span>,<span class="number">4</span>));</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'下载完成'</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//下载方法</span></div><div class="line"><span class="keyword">var</span> download = <span class="function"><span class="keyword">function</span>(<span class="params">url, dir, filename</span>)</span>&#123;</div><div class="line">    request.head(url, <span class="function"><span class="keyword">function</span>(<span class="params">err, res, body</span>)</span>&#123;</div><div class="line">        request(url).pipe(fs.createWriteStream(dir + <span class="string">"/"</span> + filename));</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>程序抓取了本博客的title和所有img标签中的图片，然后把图片下载下来（抓别人图片时，不要恶意费人流量哦，有些是cdn付费的，别看到妹子图就一个劲的抓哦）。</p>
 <h2 id="使用mongoose存储抓取到的数据"><a href="#使用mongoose存储抓取到的数据" class="headerlink" title="使用mongoose存储抓取到的数据"></a>使用mongoose存储抓取到的数据</h2><p>数据抓取完，总要落地的，这里用mongdb存储抓到的数据。采用mongdb只是为了方便，不讨论不区别和其它数据库的关系。<br>还是老习惯，直接贴代码</p>
@@ -112,7 +157,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/12/抓取网页数据和图片和截取网页快照/" data-id="ciqiywk530004x0wq06m8auco" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/12/抓取网页数据和图片和截取网页快照/" data-id="ciqjgdwsd0003yswqck1lomvl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
@@ -172,7 +217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqiywk4y0001x0wqusfb238i" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqjgdws40000yswqzl0pagjb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -219,7 +264,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqiywk4u0000x0wqe6nohrxz" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqjgdwsk0008yswqmeqvzfdc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -276,7 +321,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqiywk530003x0wqobnq0hod" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqjgdws80001yswqbz9kna7v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -329,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqiywk5l000ex0wqa0mpc8p9" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqjgdwsh0006yswqi60gm6zw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -351,7 +396,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据抓取/">数据抓取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/手机游戏/">手机游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据抓取/">数据抓取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
     </div>
   </div>
 
@@ -374,6 +419,10 @@
       <ul>
         
           <li>
+            <a href="/2016/07/12/NutsTom/">NutsTom</a>
+          </li>
+        
+          <li>
             <a href="/2016/07/12/抓取网页数据和图片和截取网页快照/">抓取网页数据和图片和截取网页快照</a>
           </li>
         
@@ -389,10 +438,6 @@
             <a href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
           </li>
         
-          <li>
-            <a href="/2016/07/06/写在前面/">写在前面</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -406,7 +451,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 Beeper2G<br>
-      Powered by <a href="http://beeper2g.com/" target="_blank">Beeper2g</a> QQ群:
+      Powered by <a href="http://beeper2g.com/" target="_blank">Beeper2g</a> QQ群:72533126
     </div>
   </div>
 </footer>
