@@ -3,14 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Beeper2G</title>
+  <title>抓取网页数据和图片和截取网页快照 | Beeper2G</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Beeper2G">
-<meta property="og:url" content="http://beeper2g.com/index.html">
+  <meta name="description" content="使用phantomjs渲染网页并截屏数据抓取和处理，是做服务的基本要求，这里先对一个轻量级的，基于Nodejs的库做一个示例。Phantom JS是一个服务器端的 JavaScript API 的 WebKit。其支持各种Web标准： DOM 处理, CSS 选择器, JSON, Canvas, 和 SVG, BalaBala…可以去官网阅读一下具体的API和Source，这里省略
+这里说一下如何">
+<meta property="og:type" content="article">
+<meta property="og:title" content="抓取网页数据和图片和截取网页快照">
+<meta property="og:url" content="http://beeper2g.com/2016/07/12/抓取网页数据和图片和截取网页快照/index.html">
 <meta property="og:site_name" content="Beeper2G">
+<meta property="og:description" content="使用phantomjs渲染网页并截屏数据抓取和处理，是做服务的基本要求，这里先对一个轻量级的，基于Nodejs的库做一个示例。Phantom JS是一个服务器端的 JavaScript API 的 WebKit。其支持各种Web标准： DOM 处理, CSS 选择器, JSON, Canvas, 和 SVG, BalaBala…可以去官网阅读一下具体的API和Source，这里省略
+这里说一下如何">
+<meta property="og:updated_time" content="2016-07-12T04:37:54.469Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Beeper2G">
+<meta name="twitter:title" content="抓取网页数据和图片和截取网页快照">
+<meta name="twitter:description" content="使用phantomjs渲染网页并截屏数据抓取和处理，是做服务的基本要求，这里先对一个轻量级的，基于Nodejs的库做一个示例。Phantom JS是一个服务器端的 JavaScript API 的 WebKit。其支持各种Web标准： DOM 处理, CSS 选择器, JSON, Canvas, 和 SVG, BalaBala…可以去官网阅读一下具体的API和Source，这里省略
+这里说一下如何">
   
     <link rel="alternate" href="/atom.xml" title="Beeper2G" type="application/atom+xml">
   
@@ -63,9 +70,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-抓取网页数据和图片和截取网页快照" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-抓取网页数据和图片和截取网页快照" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/12/抓取网页数据和图片和截取网页快照/" class="article-date">
   <time datetime="2016-07-12T04:27:25.000Z" itemprop="datePublished">2016-07-12</time>
@@ -78,8 +83,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/12/抓取网页数据和图片和截取网页快照/">抓取网页数据和图片和截取网页快照</a>
+    <h1 class="article-title" itemprop="name">
+      抓取网页数据和图片和截取网页快照
     </h1>
   
 
@@ -120,225 +125,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-CentOS上安装GitBlit服务" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/09/CentOS上安装GitBlit服务/" class="article-date">
-  <time datetime="2016-07-09T07:27:25.000Z" itemprop="datePublished">2016-07-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/09/CentOS上安装GitBlit服务/">CentOS上安装GitBlit服务</a>
-    </h1>
+    <a href="/2016/07/09/CentOS上安装GitBlit服务/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CentOS上安装GitBlit服务</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#简单介绍<br>在上一篇文章中，已经简单的介绍了如何在CentOS的服务器上搭建git服务器。但是这种方式实现的服务器功能比较弱，操作起来也比较繁琐。在网上搜索了一圈，感觉Gitblit比较符合我的需求。接下来我就简单地介绍下，如何在CentOS上搭建GitBlit服务吧。<br>GitBlit是一款纯Java库实现用来管理、查看和处理Git资料库，相当于Git的Java管理工具。该管理软件支持Windows和Linux平台。可以有效的对项目、用户权限进行控制和管理。比较适合小型团队进行管理控制。<br><img src="http://images2015.cnblogs.com/blog/137454/201607/137454-20160709144917077-1795970024.png" alt="效果图1"><br><img src="http://images2015.cnblogs.com/blog/137454/201607/137454-20160709144918171-665203311.png" alt="效果图2"><br>看上面的效果图，是不是很高大上啊，接下来就简单得介绍下在CentOS上安装GitBlit步骤吧。<br>官方网站:<a href="http://gitblit.com/" target="_blank" rel="external">http://gitblit.com/</a></p>
-<p>#安装Java环境<br>在CentOS上查看自带JDK是否安装比较简单，输入命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum list installed | grep java</div></pre></td></tr></table></figure></p>
-<p>如果没有安装JDK可以先查看下yum库中的Java安装包，然后执行命令进行下载安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum -y list java*                               # 查看yum库中java安装包</div><div class="line">yum -y install java-1.8.0-openjdk*   # 安装java-1.8.0相关java库</div></pre></td></tr></table></figure></p>
-<p>当结果显示为Complete！即安装完毕。</p>
-<p>#下载GitBlit<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir -p /opt/gitblit                # gitblit的默认输出目录是这里，所以就创建这个目录</div><div class="line">cd /opt/gitblit</div><div class="line">wget http://dl.bintray.com/gitblit/releases/gitblit-1.8.0.tar.gz</div></pre></td></tr></table></figure></p>
-<p>如果下载过程中出现提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-bash: wget: command not foundls</div></pre></td></tr></table></figure></p>
-<p>说明没有安装wget程序，用yum库装一个即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install wget</div></pre></td></tr></table></figure></p>
-<p>#解压缩Gitblit<br>使用命令tar将下载到的gitblit压缩包解压缩到目标目录，我是解压缩到/opt/gitblit目录下<br><img src="http://images2015.cnblogs.com/blog/137454/201607/137454-20160709144919046-211183810.png" alt="效果图3"></p>
-<p>#修改需要的配置文件</p>
-<p>##修改data/defaults.properties<br>根据自己的需要修改配置信息，我只修改了以下几个地方<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git.repositoriesFolder = 要保存的资料库路径</div><div class="line">server.httpPort = 要开放的HTTP端口号</div><div class="line">server.httpBindInterface = 服务器IP或者域名</div><div class="line">server.httpsBindInterface = localhost</div></pre></td></tr></table></figure></p>
-<p>修改完以后保存，退出。</p>
-<p>##修改service-centos.sh<br>根据自己的服务器的设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GITBLIT_PATH = 你解压缩存放的路径，例如/opt/gitblit</div><div class="line">GITBLIT_BASE_FOLDER = 存放数据的基地址，例如 /opt/gitblit/data</div><div class="line">GITBLIT_HTTP_PORT = 开启服务的HTTP端口</div></pre></td></tr></table></figure></p>
-<p>修改完以后保存，退出。</p>
-<p>#启动gitblit</p>
-<p>##直接启动gitblit服务<br>通过java执行gitblit服务，要注意执行的命令参数，可以参考以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -jar gitblit.jar --baseFolder data    # 当前在/opt/gitblit目录下</div></pre></td></tr></table></figure></p>
-<p>如果命令执行无误，则可以打开浏览器输入设置的站点信息即可打开GitBlit的管理界面</p>
-<p>##通过service启动gitblit服务<br>新版本Gitblit已经帮我们封装了服务安装脚本，我们只需要执行安装脚本(install-service-centos.sh)和服务启动脚本(service-centos.sh)即可。如果在执行shell脚本时出现权限问题，只需要给文件增加读写权限即可。如果配置正确的话，则可以打开浏览器输入设置的站点信息即可打开GitBlit的管理界面</p>
-<p>#要注意的地方</p>
-<ul>
-<li>我这里仅用HTTP方式访问，HTTPS方式还没有研究透</li>
-<li>环境搭建好以后，默认的管理员账户是admin，密码是admin，一定要及时进行修改</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqiywk4y0001x0wqusfb238i" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-CentOS上安装Git服务器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/07/CentOS上安装Git服务器/" class="article-date">
-  <time datetime="2016-07-07T12:27:25.000Z" itemprop="datePublished">2016-07-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/07/CentOS上安装Git服务器/">CentOS上安装Git服务器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#1.安装Git<br>打开控制台，执行以下命令进行安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel</div><div class="line">$ yum install git</div></pre></td></tr></table></figure></p>
-<p>安装过程中会停下来让你确认，不用管它，直接按Y然后回车即可。<br>安装完成以后，可以通过命令 <code>git --version</code>查看git的版本号</p>
-<p>接下来需要使用命令创建git用户组合相应的管理用户<br>首先我们先添加一个用户组gitgroup，执行以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ groupadd gitgroup</div></pre></td></tr></table></figure></p>
-<p>然后根据需要创建管理用户，我这里添加一个名为git的用户，并将其加入到gitgroup组中，执行以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ adduser git -g gitgroup</div></pre></td></tr></table></figure></p>
-<p>可以根据自己的需要，多次创建用户。<br>设置git用户的登录密码，根据以下命令修改git用户的密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ passwd git</div></pre></td></tr></table></figure></p>
-<p>#2.创建证书登录<br>收集所有需要登录的用户公钥，公钥位于id_rsa.pub文件夹中，把我们的公钥导入到/home/git/.ssh/authorized_key文件夹里，一行一个。如果没有则创建它<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cd /home/git/</div><div class="line">$ mkdir .ssh</div><div class="line">$ chmod 700 .ssh</div><div class="line">$ touch .ssh/authorized_keys</div><div class="line">$ chmod 600 .ssh/authorized_keys</div></pre></td></tr></table></figure></p>
-<p>#3.初始化Git仓库<br>安装完了Git工具，并给Git分配了需要的账户以后，我们可以进行Git仓库的创建了。我这里把Git仓库放在<code>/home</code>目录下，参考以下的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ cd /home</div><div class="line">$ mkdir gitrepo</div><div class="line">$ chown git:gitgroup gitrepo/</div><div class="line">$ cd gitrepo</div><div class="line"></div><div class="line">$ git init --bare hellogit.git</div><div class="line">初始化空的 Git 版本库于 /home/gitrepo/hellogit.git/</div></pre></td></tr></table></figure></p>
-<p>这样，我们就在/home/gitrepo/下创建了一个名为hellogit的空仓库。这里需要将仓库的所属用户修改为git，这样git用户对这个项目就有了push权限。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ chown -R git:gitgroup hellogit.git</div></pre></td></tr></table></figure></p>
-<p>这种方法安装的Git服务器有很大的局限性：仓库的拥有者才有push权限，其他的用户就没有了。单用户模式没问题，如果需要和其他人协作使用的时候就会有问题。<br>后续，我将介绍其他方式安装过程。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqiywk4u0000x0wqe6nohrxz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-使用github空间建立个人博客" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/06/使用github空间建立个人博客/" class="article-date">
-  <time datetime="2016-07-06T07:27:25.000Z" itemprop="datePublished">2016-07-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人访问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定。   </p>
-<p>后来朋友告诉我，github的空间搭博客不错，有300MB的空间，弄个静态的博客上去，完全胜任。我就动手试了试，果然可行，速度也过的去，反正也没人看，权当自己写日记了。  </p>
-<h3 id="这里写一下搭建的过程，以及遇到过的坑。"><a href="#这里写一下搭建的过程，以及遇到过的坑。" class="headerlink" title="这里写一下搭建的过程，以及遇到过的坑。"></a>这里写一下搭建的过程，以及遇到过的坑。</h3><p>域名么，早就有了，就是这个<a href="http://beeper2g.com">Beeper2G.com</a>, 那么接下来在github上申请帐号吧。这里就遇到了一个问题，用的163邮箱，结果收不到github的认证邮件。查了查，把github.com放在白名单中，再重新生成认证邮件，然后就收到了…  </p>
-<p>接下来的事就很简单了，新建一个名子和帐户一样的工程，我这是里就是beeper2g.github.io。setting中可以自动生成博客模版，下一步下一步，然后就成功了。输入<a href="http://beeper2g.github.io" target="_blank" rel="external">http://beeper2g.github.io</a> 试一下，能成功打开网站了。  </p>
-<p>工程根目录下有一个CNAME，里面放的就是域名，这个文件不能丢，丢了就解析不过来了。可以手动编辑这个文件，也可以在要setting中设置，设置成功后这个文件自动就修改成功了。修改完毕后，把你的域名解过来，带wwww的和不带的，都解析过来。再输入你的个人域名试试，应该可以打开了，打不开的话刷下dns看看解析有没问题。  </p>
-<h3 id="使用hexo写博客。"><a href="#使用hexo写博客。" class="headerlink" title="使用hexo写博客。"></a>使用hexo写博客。</h3><p>自动生成的博客，是可以使用的，只是编辑发布有点麻烦，大家可以用官方的工具来做这些事情。我这里介绍一下hexo写博客。  </p>
-<p>我知道hexo是自己从网上自己搜的，开始以为这东西是基于express的网站容器，因为按hexo官方的介绍，生成网站后，hexo server就可以在本地看效果。然后我就在centos上搭了一个hexo环境。当我查怎么样使用forever让这个玩意跑起来的时候，发现这个东西只是不是生成静态网站的工具罢了。  </p>
-<p>hexo不多说，用起来很简单，有中文文档，这里说说我遇到的坑  </p>
-<ul>
-<li>我用工具生成项目文件后，把除了node_modules以外的文件提交到了svn，然后另外一台机器上运行的npm install。后来发现运行hexo generate时，生成的网页文件不全。对比了一下，hexo init生成的文件中有package.json以外的包。</li>
-<li>github是用用户名验证的，在另一台电脑提交的时候，出现了一个问题，其实我现在也没解决掉，只是绕过了这个问题：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FATAL bash: /dev/tty: No such device or address</div><div class="line">error: failed to execute prompt script (exit code 1)</div><div class="line">fatal: could not read Username for &apos;https://github.com&apos;: Invalid argument</div></pre></td></tr></table></figure>
-<p>查了很多资料都不行，最后改了一下_config.yml，把https改成了git</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">type: git</div><div class="line">  repository: git@github.com:beeper2g/beeper2g.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-<p>然后生成key，用ssh方式提交，就成功了…</p>
-<h3 id="atom-xml和sitemap-xml"><a href="#atom-xml和sitemap-xml" class="headerlink" title="atom.xml和sitemap.xml"></a>atom.xml和sitemap.xml</h3><p>这两个文件的作用自行百度，生成的方法为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-feed --save</div><div class="line">npm install hexo-generator-sitemap --save</div></pre></td></tr></table></figure>
-<h3 id="关于图片"><a href="#关于图片" class="headerlink" title="关于图片"></a>关于图片</h3><p>图片最好不要往空间里丢，一是空间本身不大，二是图片资料访问太慢。这里建议大家用七牛的服务，用了一下，感觉不错。也可以用cloudinary的服务。这个就看个人喜好了，cloudinary功能也挺强大。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqiywk530003x0wqobnq0hod" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-写在前面" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/06/写在前面/" class="article-date">
-  <time datetime="2016-07-06T07:27:25.000Z" itemprop="datePublished">2016-07-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/06/写在前面/">写在前面</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>几年前，<a href="https://github.com/Quakertlist" target="_blank" rel="external">贵哥</a>就推荐我写博客，写博客的好处，我是很明白的，但是做为一个典型的理科生，就连读书时老师要求写的日记都是随便应付几句了事的人，要怎么坚持下来呢？<br>这次下定决心开始写博客，是考虑到了以下几个原因：  </p>
-<ul>
-<li>人老了，记性真的跟不上去了，超过35岁的程序员，应该都有感触吧  </li>
-<li>贵哥的强列要求  </li>
-<li>自己这些年到处阅读别人的成就，觉得应该把自己学到的东西总结整理一下，给刚进入程序员行列的人看一下。</li>
-<li><strong>贵哥会和我一起维护这个博客</strong></li>
-</ul>
-<p>所以，这次是真的认真打算写博客，本人想了一下，博客的内容就限制在自己有过经验的几个领域。</p>
-<ol>
-<li>金融中IT相关的技术和解决方案</li>
-<li>移动开发中遇到的问题和解决方案</li>
-<li>部署和运维当中遇到的问题和解决方案    </li>
-</ol>
-<p>博客应该不会花时间在语言或语法层面，这些东西网上教程很多，有问题应该学会自己解决。但是方案，策略等问题，一旦初期定错了方向，结局就是你懂的了。  </p>
-<p>千里之行始于足下，这里给自己加一下油，也希望大家加以鞭策和督促。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqiywk5l000ex0wqa0mpc8p9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 </section>
         
