@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://beeper2g.com/2016/07/11/%E4%BD%BF%E7%94%A8phantomjs%E6%8A%93%E5%8F%96%E7%BD%91%E9%A1%B5%E6%95%B0%E6%8D%AE%E5%92%8C%E7%BD%91%E9%A1%B5%E6%88%AA%E5%B1%8F%20-%20%E5%89%AF%E6%9C%AC/</loc>
+    <loc>http://beeper2g.com/2016/07/07/CentOS%E4%B8%8A%E5%AE%89%E8%A3%85Git%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
     
-    <lastmod>2016-07-11T12:45:37.684Z</lastmod>
+    <lastmod>2016-07-12T00:23:09.297Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://beeper2g.com/2016/07/09/CentOS%E4%B8%8A%E5%AE%89%E8%A3%85GitBlit%E6%9C%8D%E5%8A%A1/</loc>
+    
+    <lastmod>2016-07-12T00:22:51.999Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://beeper2g.com/2016/07/11/%E4%BD%BF%E7%94%A8phantomjs%E6%8A%93%E5%8F%96%E7%BD%91%E9%A1%B5%E6%95%B0%E6%8D%AE%E5%92%8C%E7%BD%91%E9%A1%B5%E6%88%AA%E5%B1%8F/</loc>
+    
+    <lastmod>2016-07-12T00:21:32.677Z</lastmod>
     
   </url>
   
@@ -12,20 +26,6 @@
     <loc>http://beeper2g.com/2016/07/11/%E4%BD%BF%E7%94%A8phantomjs%E6%B8%B2%E6%9F%93%E7%BD%91%E9%A1%B5%E5%B9%B6%E6%88%AA%E5%B1%8F/</loc>
     
     <lastmod>2016-07-11T12:32:34.351Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://beeper2g.com/2016/07/07/CentOS%E4%B8%8A%E5%AE%89%E8%A3%85Git%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
-    
-    <lastmod>2016-07-11T07:54:07.749Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://beeper2g.com/2016/07/09/CentOS%E4%B8%8A%E5%AE%89%E8%A3%85GitBlit%E6%9C%8D%E5%8A%A1/</loc>
-    
-    <lastmod>2016-07-11T07:43:40.234Z</lastmod>
     
   </url>
   
