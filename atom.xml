@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://beeper2g.com/"/>
-  <updated>2016-07-12T00:27:15.233Z</updated>
+  <updated>2016-07-12T00:30:36.241Z</updated>
   <id>http://beeper2g.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://beeper2g.com/2016/07/11/%E4%BD%BF%E7%94%A8cheerio%E8%A7%A3%E6%9E%90%E7%BD%91%E9%A1%B5/"/>
     <id>http://beeper2g.com/2016/07/11/使用cheerio解析网页/</id>
     <published>2016-07-11T12:44:25.000Z</published>
-    <updated>2016-07-12T00:27:15.233Z</updated>
+    <updated>2016-07-12T00:30:36.241Z</updated>
     
     <content type="html">&lt;p&gt;上文说了渲染网页，并且把生成的网页保存到文件。这种方法可以保存屏幕快照，但是速度很慢，需要把所需要的js,css全都加载完才能生成文件。&lt;br&gt;在实际的数据抓取中，并不需要把网页渲梁出来，而是直接从html中取到所需要的数据。&lt;/p&gt;
 &lt;p&gt;cheerio是nodejs的抓取页面模块，为服务器特别定制的，快速、灵活、实施的jQuery核心实现。适合各种Web爬虫程序。此处也不多废话，上代码&lt;/p&gt;
@@ -152,39 +152,6 @@
   </entry>
   
   <entry>
-    <title>写在前面</title>
-    <link href="http://beeper2g.com/2016/07/06/%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/"/>
-    <id>http://beeper2g.com/2016/07/06/写在前面/</id>
-    <published>2016-07-06T07:27:25.000Z</published>
-    <updated>2016-07-12T00:27:16.744Z</updated>
-    
-    <content type="html">&lt;p&gt;几年前，&lt;a href=&quot;https://github.com/Quakertlist&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;贵哥&lt;/a&gt;就推荐我写博客，写博客的好处，我是很明白的，但是做为一个典型的理科生，就连读书时老师要求写的日记都是随便应付几句了事的人，要怎么坚持下来呢？&lt;br&gt;这次下定决心开始写博客，是考虑到了以下几个原因：  &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;人老了，记性真的跟不上去了，超过35岁的程序员，应该都有感触吧  &lt;/li&gt;
-&lt;li&gt;贵哥的强列要求  &lt;/li&gt;
-&lt;li&gt;自己这些年到处阅读别人的成就，觉得应该把自己学到的东西总结整理一下，给刚进入程序员行列的人看一下。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;贵哥会和我一起维护这个博客&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;所以，这次是真的认真打算写博客，本人想了一下，博客的内容就限制在自己有过经验的几个领域。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;金融中IT相关的技术和解决方案&lt;/li&gt;
-&lt;li&gt;移动开发中遇到的问题和解决方案&lt;/li&gt;
-&lt;li&gt;部署和运维当中遇到的问题和解决方案    &lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;博客应该不会花时间在语言或语法层面，这些东西网上教程很多，有问题应该学会自己解决。但是方案，策略等问题，一旦初期定错了方向，结局就是你懂的了。  &lt;/p&gt;
-&lt;p&gt;千里之行始于足下，这里给自己加一下油，也希望大家加以鞭策和督促。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;几年前，&lt;a href=&quot;https://github.com/Quakertlist&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;贵哥&lt;/a&gt;就推荐我写博客，写博客的好处，我是很明白的，但是做为一个典型的理科生，就连读书时老师要求写的日记都是随便应付几
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>使用github空间建立个人博客</title>
     <link href="http://beeper2g.com/2016/07/06/%E4%BD%BF%E7%94%A8github%E7%A9%BA%E9%97%B4%E5%BB%BA%E7%AB%8B%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     <id>http://beeper2g.com/2016/07/06/使用github空间建立个人博客/</id>
@@ -220,6 +187,39 @@
     
     
       <category term="服务器搭建" scheme="http://beeper2g.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>写在前面</title>
+    <link href="http://beeper2g.com/2016/07/06/%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/"/>
+    <id>http://beeper2g.com/2016/07/06/写在前面/</id>
+    <published>2016-07-06T07:27:25.000Z</published>
+    <updated>2016-07-12T00:27:16.744Z</updated>
+    
+    <content type="html">&lt;p&gt;几年前，&lt;a href=&quot;https://github.com/Quakertlist&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;贵哥&lt;/a&gt;就推荐我写博客，写博客的好处，我是很明白的，但是做为一个典型的理科生，就连读书时老师要求写的日记都是随便应付几句了事的人，要怎么坚持下来呢？&lt;br&gt;这次下定决心开始写博客，是考虑到了以下几个原因：  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;人老了，记性真的跟不上去了，超过35岁的程序员，应该都有感触吧  &lt;/li&gt;
+&lt;li&gt;贵哥的强列要求  &lt;/li&gt;
+&lt;li&gt;自己这些年到处阅读别人的成就，觉得应该把自己学到的东西总结整理一下，给刚进入程序员行列的人看一下。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;贵哥会和我一起维护这个博客&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以，这次是真的认真打算写博客，本人想了一下，博客的内容就限制在自己有过经验的几个领域。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;金融中IT相关的技术和解决方案&lt;/li&gt;
+&lt;li&gt;移动开发中遇到的问题和解决方案&lt;/li&gt;
+&lt;li&gt;部署和运维当中遇到的问题和解决方案    &lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;博客应该不会花时间在语言或语法层面，这些东西网上教程很多，有问题应该学会自己解决。但是方案，策略等问题，一旦初期定错了方向，结局就是你懂的了。  &lt;/p&gt;
+&lt;p&gt;千里之行始于足下，这里给自己加一下油，也希望大家加以鞭策和督促。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;几年前，&lt;a href=&quot;https://github.com/Quakertlist&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;贵哥&lt;/a&gt;就推荐我写博客，写博客的好处，我是很明白的，但是做为一个典型的理科生，就连读书时老师要求写的日记都是随便应付几
+    
+    </summary>
+    
     
   </entry>
   
