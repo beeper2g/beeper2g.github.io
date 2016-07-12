@@ -65,10 +65,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-使用phantomjs抓取网页数据和网页截屏" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-使用cheerio解析网页" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/07/11/使用phantomjs抓取网页数据和网页截屏/" class="article-date">
-  <time datetime="2016-07-11T12:27:25.000Z" itemprop="datePublished">2016-07-11</time>
+    <a href="/2016/07/11/使用cheerio解析网页/" class="article-date">
+  <time datetime="2016-07-11T12:44:25.000Z" itemprop="datePublished">2016-07-11</time>
 </a>
     
   </div>
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/11/使用phantomjs抓取网页数据和网页截屏/">使用phantomjs抓取网页数据和网页截屏</a>
+      <a class="article-title" href="/2016/07/11/使用cheerio解析网页/">使用cheerio解析网页</a>
     </h1>
   
 
@@ -87,18 +87,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>数据抓取和处理，是做服务的基本要求，这里先对一个轻量级的，基于Nodejs的库做一个示例。<br>Phantom JS是一个服务器端的 JavaScript API 的 WebKit。其支持各种Web标准： DOM 处理, CSS 选择器, JSON, Canvas, 和 SVG, BalaBala…可以去官网<a href="http://phantomjs.org/阅读一下具体的API和Source，这里省略" target="_blank" rel="external">http://phantomjs.org/阅读一下具体的API和Source，这里省略</a></p>
-<p>这里说一下如何在Nodejs中对网页进行截屏和处理数据</p>
-<p>主要使用了phantomjs-node <a href="https://github.com/amir20/phantomjs-node" target="_blank" rel="external">https://github.com/amir20/phantomjs-node</a></p>
-<p>代码不多说，直接上</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> phantom = <span class="built_in">require</span>(<span class="string">'phantom'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> sitepage = <span class="literal">null</span>;</div><div class="line"><span class="keyword">var</span> phInstance = <span class="literal">null</span>;</div><div class="line">phantom.create()</div><div class="line">    .then(instance =&gt; &#123;</div><div class="line">        phInstance = instance;</div><div class="line">        page = phInstance.createPage();</div><div class="line">        page.viewportSize = &#123; width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.clipRect = &#123; top: <span class="number">0</span>, left: <span class="number">0</span>, width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.settings = &#123;</div><div class="line">          javascriptEnabled: <span class="literal">false</span>,</div><div class="line">          loadImages: <span class="literal">true</span>,</div><div class="line">          userAgent: <span class="string">'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) PhantomJS/19.0'</span></div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">return</span> page;</div><div class="line">    &#125;)</div><div class="line">    .then(page =&gt; &#123;</div><div class="line">        sitepage = page;</div><div class="line">        <span class="keyword">return</span> page.open(<span class="string">'https://www.baidu.com/'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(status =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(status);</div><div class="line">        sitepage.render(<span class="string">'./test.png'</span>);</div><div class="line">        <span class="keyword">return</span> sitepage.property(<span class="string">'content'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(content =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(content);</div><div class="line">        sitepage.close();</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;)</div><div class="line">    .catch(error =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(error);</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+        <p>上文说了渲染网页，并且把生成的网页保存到文件。这种方法可以保存屏幕快照，但是速度很慢，需要把所需要的js,css全都加载完才能生成文件。<br>在实际的数据抓取中，并不需要把网页渲梁出来，而是直接从html中取到所需要的数据。</p>
+<p>cheerio是nodejs的抓取页面模块，为服务器特别定制的，快速、灵活、实施的jQuery核心实现。适合各种Web爬虫程序。此处也不多废话，上代码</p>
+<p><strong><em>注意一点，蜘蛛几乎都会忽略js和jquery，所以如何想做SEO，尽量就别让客户端渲染了，还是服务端来渲梁吧。这里抓的也是静态页面上的东西</em></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> phantom = <span class="built_in">require</span>(<span class="string">'phantom'</span>);</div><div class="line"><span class="keyword">var</span> cheerio = <span class="built_in">require</span>(<span class="string">'cheerio'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> sitepage = <span class="literal">null</span>;</div><div class="line"><span class="keyword">var</span> phInstance = <span class="literal">null</span>;</div><div class="line">phantom.create()</div><div class="line">    .then(instance =&gt; &#123;</div><div class="line">        phInstance = instance;</div><div class="line">        page = phInstance.createPage();</div><div class="line">        page.viewportSize = &#123; width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.clipRect = &#123; top: <span class="number">0</span>, left: <span class="number">0</span>, width: <span class="number">1024</span>, height: <span class="number">800</span> &#125;;</div><div class="line">        page.settings = &#123;</div><div class="line">          javascriptEnabled: <span class="literal">false</span>,</div><div class="line">          loadImages: <span class="literal">true</span>,</div><div class="line">          userAgent: <span class="string">'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) PhantomJS/19.0'</span></div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">return</span> page;</div><div class="line">    &#125;)</div><div class="line">    .then(page =&gt; &#123;</div><div class="line">        sitepage = page;</div><div class="line">        <span class="keyword">return</span> page.open(<span class="string">'http://beeper2g.com/'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(status =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(status);</div><div class="line">        sitepage.render(<span class="string">'./test.png'</span>);</div><div class="line">        <span class="keyword">return</span> sitepage.property(<span class="string">'content'</span>);</div><div class="line">    &#125;)</div><div class="line">    .then(content =&gt; &#123;</div><div class="line">        <span class="keyword">let</span> $ = cheerio.load(content)</div><div class="line">        <span class="built_in">console</span>.log($(<span class="string">'a#logo'</span>)[<span class="number">0</span>].text);</div><div class="line">        sitepage.close();</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;)</div><div class="line">    .catch(error =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(error);</div><div class="line">        phInstance.exit();</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>程序抓取了本博客的title和所有img标签中的图片，然后把图片下载下来（抓别人图片时，不要恶意费人流量哦，有些是cdn付费的，别看到妹子图就一个劲的抓哦）。</p>
 <p>测试的话，首先</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm init</div><div class="line">$ npm install phantom --save</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">再把上面代码保存在index.js中，运行</div><div class="line">$ node index.js 即可</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ npm init</div><div class="line">$ npm install cheerio --save</div><div class="line">$ npm install fs --save</div><div class="line">$ npm install mkdirp --save</div><div class="line">$ npm install request --save</div></pre></td></tr></table></figure>
+<p>再把上面代码保存在index.js中，运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node index.js</div></pre></td></tr></table></figure>
+<p>即可</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs抓取网页数据和网页截屏/" data-id="ciqipsmck0006gkwqnisqqvv4" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/11/使用cheerio解析网页/" data-id="ciqipyazh00047wwqx6fyj6tk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
@@ -146,7 +149,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs渲染网页并截屏/" data-id="ciqipsmcn0008gkwqv9gfw2q1" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/11/使用phantomjs渲染网页并截屏/" data-id="ciqipyazk00067wwqqzyit34t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据抓取/">数据抓取</a></li></ul>
@@ -206,7 +209,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqipsmcf0003gkwqec3h7yq3" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/09/CentOS上安装GitBlit服务/" data-id="ciqipyaz500007wwq91igjf9h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -253,64 +256,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqipsmc60000gkwq91iy3bio" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-使用github空间建立个人博客" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/06/使用github空间建立个人博客/" class="article-date">
-  <time datetime="2016-07-06T07:27:25.000Z" itemprop="datePublished">2016-07-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人访问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定。   </p>
-<p>后来朋友告诉我，github的空间搭博客不错，有300MB的空间，弄个静态的博客上去，完全胜任。我就动手试了试，果然可行，速度也过的去，反正也没人看，权当自己写日记了。  </p>
-<h3 id="这里写一下搭建的过程，以及遇到过的坑。"><a href="#这里写一下搭建的过程，以及遇到过的坑。" class="headerlink" title="这里写一下搭建的过程，以及遇到过的坑。"></a>这里写一下搭建的过程，以及遇到过的坑。</h3><p>域名么，早就有了，就是这个<a href="http://beeper2g.com">Beeper2G.com</a>, 那么接下来在github上申请帐号吧。这里就遇到了一个问题，用的163邮箱，结果收不到github的认证邮件。查了查，把github.com放在白名单中，再重新生成认证邮件，然后就收到了…  </p>
-<p>接下来的事就很简单了，新建一个名子和帐户一样的工程，我这是里就是beeper2g.github.io。setting中可以自动生成博客模版，下一步下一步，然后就成功了。输入<a href="http://beeper2g.github.io" target="_blank" rel="external">http://beeper2g.github.io</a> 试一下，能成功打开网站了。  </p>
-<p>工程根目录下有一个CNAME，里面放的就是域名，这个文件不能丢，丢了就解析不过来了。可以手动编辑这个文件，也可以在要setting中设置，设置成功后这个文件自动就修改成功了。修改完毕后，把你的域名解过来，带wwww的和不带的，都解析过来。再输入你的个人域名试试，应该可以打开了，打不开的话刷下dns看看解析有没问题。  </p>
-<h3 id="使用hexo写博客。"><a href="#使用hexo写博客。" class="headerlink" title="使用hexo写博客。"></a>使用hexo写博客。</h3><p>自动生成的博客，是可以使用的，只是编辑发布有点麻烦，大家可以用官方的工具来做这些事情。我这里介绍一下hexo写博客。  </p>
-<p>我知道hexo是自己从网上自己搜的，开始以为这东西是基于express的网站容器，因为按hexo官方的介绍，生成网站后，hexo server就可以在本地看效果。然后我就在centos上搭了一个hexo环境。当我查怎么样使用forever让这个玩意跑起来的时候，发现这个东西只是不是生成静态网站的工具罢了。  </p>
-<p>hexo不多说，用起来很简单，有中文文档，这里说说我遇到的坑  </p>
-<ul>
-<li>我用工具生成项目文件后，把除了node_modules以外的文件提交到了svn，然后另外一台机器上运行的npm install。后来发现运行hexo generate时，生成的网页文件不全。对比了一下，hexo init生成的文件中有package.json以外的包。</li>
-<li>github是用用户名验证的，在另一台电脑提交的时候，出现了一个问题，其实我现在也没解决掉，只是绕过了这个问题：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FATAL bash: /dev/tty: No such device or address</div><div class="line">error: failed to execute prompt script (exit code 1)</div><div class="line">fatal: could not read Username for &apos;https://github.com&apos;: Invalid argument</div></pre></td></tr></table></figure>
-<p>查了很多资料都不行，最后改了一下_config.yml，把https改成了git</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">type: git</div><div class="line">  repository: git@github.com:beeper2g/beeper2g.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-<p>然后生成key，用ssh方式提交，就成功了…</p>
-<h3 id="atom-xml和sitemap-xml"><a href="#atom-xml和sitemap-xml" class="headerlink" title="atom.xml和sitemap.xml"></a>atom.xml和sitemap.xml</h3><p>这两个文件的作用自行百度，生成的方法为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-feed --save</div><div class="line">npm install hexo-generator-sitemap --save</div></pre></td></tr></table></figure>
-<h3 id="关于图片"><a href="#关于图片" class="headerlink" title="关于图片"></a>关于图片</h3><p>图片最好不要往空间里丢，一是空间本身不大，二是图片资料访问太慢。这里建议大家用七牛的服务，用了一下，感觉不错。也可以用cloudinary的服务。这个就看个人喜好了，cloudinary功能也挺强大。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqipsmca0001gkwq0ehsihd8" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/07/CentOS上安装Git服务器/" data-id="ciqipyaza00017wwq5v506hp0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
@@ -363,9 +309,66 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqipsmcg0004gkwqk7pb48kw" class="article-share-link">Share</a>
+      <a data-url="http://beeper2g.com/2016/07/06/写在前面/" data-id="ciqipyazf00037wwquxxk8gt8" class="article-share-link">Share</a>
       
       
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-使用github空间建立个人博客" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/06/使用github空间建立个人博客/" class="article-date">
+  <time datetime="2016-07-06T07:27:25.000Z" itemprop="datePublished">2016-07-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>很早之前就搭了个博客，放了些自己写的东西在上面。当时是申请的阿里云的服务器，最便宜的那种，六百多一年（实在没人访问）。后来停用的原因也很简单，工信部是备了案，需要在公安局再备一次，填写了几次表格都不太合标准，然后就把服务器关了。想一想自己实在挫，否则也不至于这么点事也搞不定。   </p>
+<p>后来朋友告诉我，github的空间搭博客不错，有300MB的空间，弄个静态的博客上去，完全胜任。我就动手试了试，果然可行，速度也过的去，反正也没人看，权当自己写日记了。  </p>
+<h3 id="这里写一下搭建的过程，以及遇到过的坑。"><a href="#这里写一下搭建的过程，以及遇到过的坑。" class="headerlink" title="这里写一下搭建的过程，以及遇到过的坑。"></a>这里写一下搭建的过程，以及遇到过的坑。</h3><p>域名么，早就有了，就是这个<a href="http://beeper2g.com">Beeper2G.com</a>, 那么接下来在github上申请帐号吧。这里就遇到了一个问题，用的163邮箱，结果收不到github的认证邮件。查了查，把github.com放在白名单中，再重新生成认证邮件，然后就收到了…  </p>
+<p>接下来的事就很简单了，新建一个名子和帐户一样的工程，我这是里就是beeper2g.github.io。setting中可以自动生成博客模版，下一步下一步，然后就成功了。输入<a href="http://beeper2g.github.io" target="_blank" rel="external">http://beeper2g.github.io</a> 试一下，能成功打开网站了。  </p>
+<p>工程根目录下有一个CNAME，里面放的就是域名，这个文件不能丢，丢了就解析不过来了。可以手动编辑这个文件，也可以在要setting中设置，设置成功后这个文件自动就修改成功了。修改完毕后，把你的域名解过来，带wwww的和不带的，都解析过来。再输入你的个人域名试试，应该可以打开了，打不开的话刷下dns看看解析有没问题。  </p>
+<h3 id="使用hexo写博客。"><a href="#使用hexo写博客。" class="headerlink" title="使用hexo写博客。"></a>使用hexo写博客。</h3><p>自动生成的博客，是可以使用的，只是编辑发布有点麻烦，大家可以用官方的工具来做这些事情。我这里介绍一下hexo写博客。  </p>
+<p>我知道hexo是自己从网上自己搜的，开始以为这东西是基于express的网站容器，因为按hexo官方的介绍，生成网站后，hexo server就可以在本地看效果。然后我就在centos上搭了一个hexo环境。当我查怎么样使用forever让这个玩意跑起来的时候，发现这个东西只是不是生成静态网站的工具罢了。  </p>
+<p>hexo不多说，用起来很简单，有中文文档，这里说说我遇到的坑  </p>
+<ul>
+<li>我用工具生成项目文件后，把除了node_modules以外的文件提交到了svn，然后另外一台机器上运行的npm install。后来发现运行hexo generate时，生成的网页文件不全。对比了一下，hexo init生成的文件中有package.json以外的包。</li>
+<li>github是用用户名验证的，在另一台电脑提交的时候，出现了一个问题，其实我现在也没解决掉，只是绕过了这个问题：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FATAL bash: /dev/tty: No such device or address</div><div class="line">error: failed to execute prompt script (exit code 1)</div><div class="line">fatal: could not read Username for &apos;https://github.com&apos;: Invalid argument</div></pre></td></tr></table></figure>
+<p>查了很多资料都不行，最后改了一下_config.yml，把https改成了git</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">type: git</div><div class="line">  repository: git@github.com:beeper2g/beeper2g.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+<p>然后生成key，用ssh方式提交，就成功了…</p>
+<h3 id="atom-xml和sitemap-xml"><a href="#atom-xml和sitemap-xml" class="headerlink" title="atom.xml和sitemap.xml"></a>atom.xml和sitemap.xml</h3><p>这两个文件的作用自行百度，生成的方法为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-feed --save</div><div class="line">npm install hexo-generator-sitemap --save</div></pre></td></tr></table></figure>
+<h3 id="关于图片"><a href="#关于图片" class="headerlink" title="关于图片"></a>关于图片</h3><p>图片最好不要往空间里丢，一是空间本身不大，二是图片资料访问太慢。这里建议大家用七牛的服务，用了一下，感觉不错。也可以用cloudinary的服务。这个就看个人喜好了，cloudinary功能也挺强大。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://beeper2g.com/2016/07/06/使用github空间建立个人博客/" data-id="ciqipyazm00087wwqdqfzo7f2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器搭建/">服务器搭建</a></li></ul>
+
     </footer>
   </div>
   
@@ -408,7 +411,7 @@
       <ul>
         
           <li>
-            <a href="/2016/07/11/使用phantomjs抓取网页数据和网页截屏/">使用phantomjs抓取网页数据和网页截屏</a>
+            <a href="/2016/07/11/使用cheerio解析网页/">使用cheerio解析网页</a>
           </li>
         
           <li>
@@ -424,7 +427,7 @@
           </li>
         
           <li>
-            <a href="/2016/07/06/使用github空间建立个人博客/">使用github空间建立个人博客</a>
+            <a href="/2016/07/06/写在前面/">写在前面</a>
           </li>
         
       </ul>
